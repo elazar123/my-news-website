@@ -14,21 +14,33 @@ collections:
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - {label: "כותרת המאמר", name: "title", widget: "string"}
-      - {label: "כותרת משנה", name: "subtitle", widget: "string", required: false}
-      - {label: "תאריך פרסום", name: "date", widget: "datetime"}
-      - {label: "שם הכותב", name: "author", widget: "string"}
-      - {label: "תמונת הכותב", name: "author_image", widget: "image", required: false}
-      - {label: "סוג המאמר", name: "category", widget: "select", options: ["חדשות", "טכנולוגיה", "ספורט", "תרבות", "כלכלה", "בריאות", "חינוך", "דעה"]}
-      - {label: "תקציר", name: "excerpt", widget: "text"}
-      - {label: "תמונה ראשית", name: "featured_image", widget: "image", required: false}
-      - {label: "כיתוב לתמונה הראשית", name: "featured_image_caption", widget: "string", required: false}
-      - {label: "גלריית תמונות", name: "gallery", widget: "list", field: {label: "תמונה", name: "image", widget: "image"}, required: false}
-      - {label: "תוכן המאמר", name: "body", widget: "markdown"}
-      - {label: "תגיות", name: "tags", widget: "list", required: false}
+      - {label: "כותרת", name: "title", widget: "string"}
+      - {label: "תקציר קצר", name: "excerpt", widget: "text", hint: "תיאור קצר של המאמר"}
+      - {label: "קטגוריה", name: "category", widget: "select", options: ["חדשות", "דעה", "טכנולוגיה", "ספורט", "תרבות", "כלכלה", "בריאות"], default: "חדשות"}
+      - {label: "תמונה ראשית", name: "featured_image", widget: "image", required: false, hint: "תמונה שתופיע עם המאמר"}
+      - {label: "תוכן המאמר", name: "body", widget: "markdown", hint: "כתוב כאן את המאמר"}
+      - {label: "שם הכותב", name: "author", widget: "string", default: "אלעזר ריגר"}
+      - {label: "תאריך פרסום", name: "date", widget: "datetime", default: "{{now}}"}
       - {label: "מפורסם", name: "published", widget: "boolean", default: true}
-      - {label: "מאמר דחוף", name: "urgent", widget: "boolean", default: false}
-      - {label: "מאמר מומלץ", name: "featured", widget: "boolean", default: false}
+      - {label: "חדשות דחופות", name: "urgent", widget: "boolean", default: false, hint: "יופיע באדום"}
+      - {label: "מאמר מומלץ", name: "featured", widget: "boolean", default: false, hint: "יופיע עם כוכב"}
+
+  - name: "quick-posts"
+    label: "פוסט מהיר"
+    folder: "posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "כותרת", name: "title", widget: "string"}
+      - {label: "תוכן", name: "body", widget: "text", hint: "כתוב כאן את הפוסט"}
+      - {label: "תמונה", name: "featured_image", widget: "image", required: false}
+      - {label: "קטגוריה", name: "category", widget: "select", options: ["חדשות", "דעה"], default: "חדשות"}
+      - {label: "שם הכותב", name: "author", widget: "hidden", default: "אלעזר ריגר"}
+      - {label: "תאריך פרסום", name: "date", widget: "hidden", default: "{{now}}"}
+      - {label: "תקציר", name: "excerpt", widget: "hidden", default: "{{title}}"}
+      - {label: "מפורסם", name: "published", widget: "hidden", default: true}
+      - {label: "דחוף", name: "urgent", widget: "boolean", default: false}
+      - {label: "מומלץ", name: "featured", widget: "hidden", default: false}
 
   - name: "authors"
     label: "כותבים"

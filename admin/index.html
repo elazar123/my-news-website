@@ -5,12 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ניהול תוכן - אתר המאמרים</title>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <style>
+        /* עיצוב מותאם לטלפון */
+        @media (max-width: 768px) {
+            .nc-app-container {
+                padding: 10px !important;
+            }
+            
+            .nc-entryEditor-widget {
+                margin-bottom: 15px !important;
+            }
+            
+            .nc-controlPane-widget {
+                font-size: 16px !important;
+            }
+            
+            .nc-textField-input, .nc-textArea-input {
+                font-size: 16px !important;
+                padding: 12px !important;
+                border-radius: 8px !important;
+            }
+            
+            .nc-button {
+                padding: 12px 20px !important;
+                font-size: 16px !important;
+                border-radius: 8px !important;
+            }
+            
+            .nc-collectionPage-sidebar {
+                display: none !important;
+            }
+            
+            .nc-entryListing-card {
+                margin-bottom: 10px !important;
+                padding: 15px !important;
+            }
+        }
+        
+        /* עיצוב כללי */
+        body {
+            font-family: 'Heebo', Arial, sans-serif !important;
+            direction: rtl !important;
+        }
+        
+        .nc-app-container {
+            direction: rtl !important;
+        }
+    </style>
 </head>
 <body>
     <!-- Include the script that builds the page and powers Netlify CMS -->
     <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
     
     <script>
+        // הגדרות מותאמות לטלפון
+        CMS.init({
+            config: {
+                load_config_file: true,
+                display_url: 'https://merry-heliotrope-83b40f.netlify.app',
+                logo_url: 'https://merry-heliotrope-83b40f.netlify.app/favicon.ico'
+            }
+        });
+        
         if (window.netlifyIdentity) {
             window.netlifyIdentity.on("init", user => {
                 if (!user) {
