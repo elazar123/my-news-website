@@ -17,7 +17,7 @@ collections:
       - {label: "כותרת", name: "title", widget: "string"}
       - {label: "תקציר", name: "excerpt", widget: "text", hint: "תיאור קצר של המאמר"}
       - {label: "כותב", name: "author", widget: "select", options: ["אלעזר ריגר", "יוחנן דו", "שרה כהן", "דוד לוי"], default: "אלעזר ריגר"}
-      - {label: "סוג תוכן", name: "category", widget: "select", options: ["עדכונים", "כתבות", "פער קמפיין", "מאמר שבועי", "דעה", "חדשות"], default: "עדכונים"}
+      - {label: "סוג תוכן", name: "category", widget: "select", options: ["עדכונים", "כתבות", "קמפיין", "מאמר שבועי", "דעה"], default: "עדכונים"}
       - {label: "תמונה ראשית", name: "featured_image", widget: "image", required: false}
       - {label: "תוכן", name: "body", widget: "markdown"}
       - {label: "תאריך פרסום", name: "date", widget: "datetime", default: "{{now}}"}
@@ -34,7 +34,7 @@ collections:
       - {label: "כותרת", name: "title", widget: "string"}
       - {label: "תוכן", name: "body", widget: "text", hint: "כתוב כאן את הפוסט"}
       - {label: "תמונה", name: "featured_image", widget: "image", required: false}
-      - {label: "סוג תוכן", name: "category", widget: "select", options: ["עדכונים", "חדשות"], default: "עדכונים"}
+      - {label: "סוג תוכן", name: "category", widget: "select", options: ["עדכונים", "דעה"], default: "עדכונים"}
       - {label: "כותב", name: "author", widget: "hidden", default: "אלעזר ריגר"}
       - {label: "תאריך פרסום", name: "date", widget: "hidden", default: "{{now}}"}
       - {label: "תקציר", name: "excerpt", widget: "hidden", default: "{{title}}"}
