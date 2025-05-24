@@ -17,7 +17,7 @@ const posts = [
     }
 ];
 
-// פונקציה לטעינת מאמרים אוטומטית
+// פונקציה לטעינת מאמרים
 async function loadArticles() {
     const articlesGrid = document.getElementById('articles-grid');
     
@@ -25,10 +25,19 @@ async function loadArticles() {
         articlesGrid.innerHTML = '<div class="loading">טוען מאמרים...</div>';
         allArticles = [];
         
-        // ננסה לטעון מאמרים עם תבניות שמות שונות
-        const possibleFiles = await generatePossibleFilenames();
+        // רשימת המאמרים הקיימים + חיפוש אוטומטי למאמרים חדשים
+        const knownFiles = [
+            '2025-05-24-gideon-warriors.md',
+            '2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md',
+            '2025-05-24-אני-רוצה-לבדוק-אם-זה-עובד.md'
+        ];
         
-        for (const filename of possibleFiles) {
+        // חיפוש אוטומטי למאמרים חדשים
+        const additionalFiles = await findNewArticles();
+        const allFiles = [...knownFiles, ...additionalFiles];
+        
+        // טעינת כל המאמרים
+        for (const filename of allFiles) {
             try {
                 const response = await fetch(`posts/${encodeURIComponent(filename)}`);
                 if (response.ok) {
@@ -41,7 +50,7 @@ async function loadArticles() {
                     }
                 }
             } catch (error) {
-                // שקט - זה נורמלי שחלק מהקבצים לא קיימים
+                // שקט - קובץ לא קיים
             }
         }
         
@@ -65,76 +74,66 @@ async function loadArticles() {
     }
 }
 
-// פונקציה ליצירת רשימת שמות קבצים אפשריים
-async function generatePossibleFilenames() {
-    const filenames = [];
-    const currentYear = new Date().getFullYear();
-    const currentMonth = new Date().getMonth() + 1;
+// פונקציה לחיפוש מאמרים חדשים
+async function findNewArticles() {
+    const newFiles = [];
+    const currentDate = new Date();
     
-    // ננסה תאריכים מהחודש הנוכחי ו-6 חודשים אחורה
-    for (let monthOffset = 0; monthOffset <= 6; monthOffset++) {
-        const date = new Date(currentYear, currentMonth - 1 - monthOffset, 1);
+    // חיפוש מאמרים מהשבועיים האחרונים
+    for (let daysBack = 0; daysBack <= 14; daysBack++) {
+        const date = new Date(currentDate);
+        date.setDate(date.getDate() - daysBack);
+        
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const datePrefix = `${year}-${month}-${day}`;
         
-        // ננסה כל יום בחודש
-        for (let day = 1; day <= 31; day++) {
-            const dayStr = String(day).padStart(2, '0');
-            const datePrefix = `${year}-${month}-${dayStr}`;
+        // תבניות שמות נפוצות שאתה עלול להשתמש בהן
+        const patterns = [
+            'מאמר-חדש', 'עדכון', 'כתבה', 'דעה', 'חדשות', 'הודעה',
+            'post', 'article', 'news', 'update', 'opinion',
+            'test', 'בדיקה', 'ניסיון'
+        ];
+        
+        // בדיקת כל תבנית
+        for (const pattern of patterns) {
+            const filename = `${datePrefix}-${pattern}.md`;
             
-            // תבניות שמות נפוצות - כולל תבניות בעברית ובאנגלית
-            const commonPatterns = [
-                // תבניות קיימות
-                'gideon-warriors',
-                'הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס',
-                'אני-רוצה-לבדוק-אם-זה-עובד',
-                
-                // תבניות כלליות בעברית
-                'מאמר-חדש',
-                'עדכון-חשוב',
-                'כתבה-מיוחדת',
-                'דעה-אישית',
-                'קמפיין-חדש',
-                'מאמר-שבועי',
-                'חדשות-דחופות',
-                'הודעה-חשובה',
-                'מסר-לעם',
-                'קריאה-לפעולה',
-                
-                // תבניות באנגלית
-                'welcome-post',
-                'tech-news',
-                'breaking-news',
-                'article',
-                'post',
-                'news',
-                'update',
-                'opinion',
-                'campaign',
-                'weekly-article',
-                'urgent-news',
-                'important-message',
-                'call-to-action',
-                
-                // תבניות מספריות
-                'post-1', 'post-2', 'post-3', 'post-4', 'post-5',
-                'article-1', 'article-2', 'article-3', 'article-4', 'article-5',
-                'news-1', 'news-2', 'news-3', 'news-4', 'news-5',
-                
-                // תבניות עם מילים נפוצות
-                'test', 'בדיקה', 'ניסיון', 'demo', 'example', 'דוגמה'
-            ];
+            try {
+                const response = await fetch(`posts/${encodeURIComponent(filename)}`, { method: 'HEAD' });
+                if (response.ok) {
+                    newFiles.push(filename);
+                }
+            } catch (error) {
+                // שקט - קובץ לא קיים
+            }
+        }
+        
+        // גם בדיקה של קבצים עם שמות ארוכים יותר (כמו שלך)
+        const longPatterns = [
+            'הברכיים-שלא-כרעו',
+            'אני-רוצה-לבדוק',
+            'gideon-warriors',
+            'מאמר-מיוחד',
+            'כתבה-חשובה'
+        ];
+        
+        for (const pattern of longPatterns) {
+            const filename = `${datePrefix}-${pattern}.md`;
             
-            commonPatterns.forEach(pattern => {
-                filenames.push(`${datePrefix}-${pattern}.md`);
-            });
-            
-            // גם ננסה בלי תבנית - רק תאריך
-            filenames.push(`${datePrefix}.md`);
+            try {
+                const response = await fetch(`posts/${encodeURIComponent(filename)}`, { method: 'HEAD' });
+                if (response.ok) {
+                    newFiles.push(filename);
+                }
+            } catch (error) {
+                // שקט - קובץ לא קיים
+            }
         }
     }
     
-    return filenames;
+    return newFiles;
 }
 
 // פונקציה להצגת כל המאמרים ברשת כרטיסים
