@@ -43,11 +43,11 @@ async function loadArticles() {
         // מיון מאמרים לפי תאריך (החדשים ראשונים)
         allArticles.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
         
-        // הצגת מאמרים מיוחדים
-        displaySpecialArticles();
+        // הצגת כל המאמרים ברשת כרטיסים
+        displayAllArticles();
         
-        // הצגת כל המאמרים
-        displayArticles();
+        // הצגת מאמרים לפי קטגוריות
+        displayCategorizedArticles();
         
     } catch (error) {
         console.error('שגיאה בטעינת מאמרים:', error);
@@ -55,112 +55,54 @@ async function loadArticles() {
     }
 }
 
-// פונקציה להצגת מאמרים מיוחדים
-function displaySpecialArticles() {
-    // מאמרים דחופים
-    const urgentArticles = allArticles.filter(article => article.frontmatter.urgent);
-    if (urgentArticles.length > 0) {
-        displayUrgentArticles(urgentArticles);
-    }
-    
-    // מאמר ראשי (המאמר הראשון שמומלץ או החדש ביותר)
-    const heroArticle = allArticles.find(article => article.frontmatter.featured) || allArticles[0];
-    if (heroArticle) {
-        displayHeroArticle(heroArticle);
-    }
-    
-    // מאמרים מומלצים
-    const featuredArticles = allArticles.filter(article => article.frontmatter.featured && article !== heroArticle);
-    if (featuredArticles.length > 0) {
-        displayFeaturedArticles(featuredArticles);
-    }
-}
-
-// פונקציה להצגת מאמרים דחופים
-function displayUrgentArticles(urgentArticles) {
-    const urgentSection = document.getElementById('urgent-section');
-    const urgentContainer = document.getElementById('urgent-articles');
-    
-    urgentContainer.innerHTML = '';
-    urgentArticles.forEach(article => {
-        const urgentDiv = document.createElement('div');
-        urgentDiv.className = 'urgent-article';
-        urgentDiv.innerHTML = `
-            <strong>${article.frontmatter.title}</strong>
-            <p style="margin-top: 0.5rem; opacity: 0.9;">${article.frontmatter.excerpt || ''}</p>
-        `;
-        urgentDiv.addEventListener('click', () => {
-            window.location.href = `post.html?post=${encodeURIComponent(article.filename)}`;
-        });
-        urgentContainer.appendChild(urgentDiv);
-    });
-    
-    urgentSection.style.display = 'block';
-}
-
-// פונקציה להצגת מאמר ראשי
-function displayHeroArticle(article) {
-    const heroSection = document.getElementById('hero-section');
-    const heroContainer = document.getElementById('hero-article');
-    
-    const imageUrl = article.frontmatter.featured_image || '/assets/images/default-hero.jpg';
-    const category = article.frontmatter.category || 'כללי';
-    const author = article.frontmatter.author || 'כותב אלמוני';
-    const date = formatDate(article.frontmatter.date);
-    
-    heroContainer.innerHTML = `
-        <div class="hero-image" style="background-image: url('${imageUrl}'); background-size: cover; background-position: center;"></div>
-        <div class="hero-overlay">
-            <span class="hero-category">${category}</span>
-            <h2 class="hero-title">${article.frontmatter.title}</h2>
-            ${article.frontmatter.subtitle ? `<p class="hero-subtitle">${article.frontmatter.subtitle}</p>` : ''}
-            <div class="hero-meta">
-                <div class="author-info">
-                    <span>${author}</span>
-                </div>
-                <span>${date}</span>
-            </div>
-        </div>
-    `;
-    
-    heroContainer.addEventListener('click', () => {
-        window.location.href = `post.html?post=${encodeURIComponent(article.filename)}`;
-    });
-    
-    heroSection.style.display = 'block';
-}
-
-// פונקציה להצגת מאמרים מומלצים
-function displayFeaturedArticles(featuredArticles) {
-    const featuredSection = document.getElementById('featured-section');
-    const featuredContainer = document.getElementById('featured-articles');
-    
-    featuredContainer.innerHTML = '';
-    featuredArticles.slice(0, 3).forEach(article => {
-        const card = createArticleCard(article, article.filename, true);
-        featuredContainer.appendChild(card);
-    });
-    
-    featuredSection.style.display = 'block';
-}
-
-// פונקציה להצגת כל המאמרים
-function displayArticles() {
+// פונקציה להצגת כל המאמרים ברשת כרטיסים
+function displayAllArticles() {
     const articlesGrid = document.getElementById('articles-grid');
-    const filteredArticles = currentFilter === 'all' 
-        ? allArticles 
-        : allArticles.filter(article => article.frontmatter.category === currentFilter);
-    
     articlesGrid.innerHTML = '';
     
-    if (filteredArticles.length === 0) {
-        articlesGrid.innerHTML = '<div class="loading">אין מאמרים להצגה בקטגוריה זו</div>';
+    if (allArticles.length === 0) {
+        articlesGrid.innerHTML = '<div class="loading">אין מאמרים זמינים</div>';
         return;
     }
     
-    filteredArticles.forEach(article => {
+    allArticles.forEach(article => {
         const articleCard = createArticleCard(article, article.filename);
         articlesGrid.appendChild(articleCard);
+    });
+}
+
+// פונקציה להצגת מאמרים לפי קטגוריות
+function displayCategorizedArticles() {
+    const categories = [
+        { name: 'עדכונים', gridId: 'updates-grid' },
+        { name: 'כתבות', gridId: 'articles-category-grid' },
+        { name: 'קמפיין', gridId: 'campaign-grid' },
+        { name: 'מאמר שבועי', gridId: 'weekly-grid' },
+        { name: 'דעה', gridId: 'opinions-grid' }
+    ];
+    
+    categories.forEach(category => {
+        const grid = document.getElementById(category.gridId);
+        if (!grid) return;
+        
+        const categoryArticles = allArticles.filter(article => 
+            article.frontmatter.category === category.name
+        );
+        
+        grid.innerHTML = '';
+        
+        if (categoryArticles.length === 0) {
+            grid.innerHTML = `
+                <div class="empty-category">
+                    אין ${category.name} זמינים כרגע
+                </div>
+            `;
+        } else {
+            categoryArticles.slice(0, 4).forEach(article => {
+                const card = createArticleCard(article, article.filename, true);
+                grid.appendChild(card);
+            });
+        }
     });
 }
 
