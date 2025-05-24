@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>אתר החדשות שלי</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">📰 אתר החדשות</h1>
+            <nav class="nav">
+                <a href="#" class="nav-link" data-category="all">כל החדשות</a>
+                <a href="#" class="nav-link" data-category="חדשות">חדשות</a>
+                <a href="#" class="nav-link" data-category="טכנולוגיה">טכנולוגיה</a>
+                <a href="#" class="nav-link" data-category="ספורט">ספורט</a>
+                <a href="#" class="nav-link" data-category="תרבות">תרבות</a>
+                <a href="/admin" class="nav-link admin-link">ניהול</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <!-- מאמרים דחופים -->
+            <section id="urgent-section" class="urgent-section" style="display: none;">
+                <h2 class="urgent-title">🚨 חדשות דחופות</h2>
+                <div id="urgent-articles" class="urgent-articles"></div>
+            </section>
+
+            <!-- מאמר ראשי -->
+            <section id="hero-section" class="hero-news" style="display: none;">
+                <div id="hero-article" class="hero-article"></div>
+            </section>
+
+            <!-- מאמרים מומלצים -->
+            <section id="featured-section" class="featured-section" style="display: none;">
+                <h3 class="section-title">⭐ מאמרים מומלצים</h3>
+                <div id="featured-articles" class="featured-grid"></div>
+            </section>
+
+            <!-- כל המאמרים -->
+            <section class="articles-section">
+                <div class="section-header">
+                    <h3 class="section-title">כל המאמרים</h3>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-category="all">הכל</button>
+                        <button class="filter-btn" data-category="חדשות">חדשות</button>
+                        <button class="filter-btn" data-category="טכנולוגיה">טכנולוגיה</button>
+                        <button class="filter-btn" data-category="ספורט">ספורט</button>
+                        <button class="filter-btn" data-category="תרבות">תרבות</button>
+                        <button class="filter-btn" data-category="כלכלה">כלכלה</button>
+                        <button class="filter-btn" data-category="בריאות">בריאות</button>
+                        <button class="filter-btn" data-category="דעה">דעה</button>
+                    </div>
+                </div>
+                <div id="articles-grid" class="articles-grid">
+                    <div class="loading">טוען מאמרים...</div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>אתר החדשות</h4>
+                    <p>המקום שלכם לחדשות מעודכנות ואמינות</p>
+                </div>
+                <div class="footer-section">
+                    <h4>קטגוריות</h4>
+                    <ul>
+                        <li><a href="#">חדשות</a></li>
+                        <li><a href="#">טכנולוגיה</a></li>
+                        <li><a href="#">ספורט</a></li>
+                        <li><a href="#">תרבות</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>צור קשר</h4>
+                    <p>info@news-site.com</p>
+                    <p>טלפון: 03-1234567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 אתר החדשות. כל הזכויות שמורות.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/admin/";
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html> 

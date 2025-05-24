@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="post-title">מאמר - אתר החדשות</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">📰 אתר החדשות</h1>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">כל החדשות</a>
+                <a href="#" class="nav-link" data-category="חדשות">חדשות</a>
+                <a href="#" class="nav-link" data-category="טכנולוגיה">טכנולוגיה</a>
+                <a href="#" class="nav-link" data-category="ספורט">ספורט</a>
+                <a href="#" class="nav-link" data-category="תרבות">תרבות</a>
+                <a href="/admin" class="nav-link admin-link">ניהול</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <a href="index.html" class="back-link">← חזרה לעמוד הבית</a>
+            
+            <article class="post">
+                <header class="post-header">
+                    <div id="post-category-container"></div>
+                    <img id="post-featured-image" class="post-featured-image" style="display: none;">
+                    <h1 id="article-title" class="post-title">טוען מאמר...</h1>
+                    <p id="article-subtitle" class="post-subtitle" style="display: none;"></p>
+                    <div id="article-meta" class="post-meta">
+                        <div id="post-author-info" class="post-author-info">
+                            <img id="author-avatar" class="post-author-avatar" style="display: none;">
+                            <span id="article-author"></span>
+                        </div>
+                        <span id="article-date"></span>
+                    </div>
+                </header>
+                
+                <div id="article-content" class="post-content">
+                    <div class="loading">טוען תוכן המאמר...</div>
+                </div>
+
+                <!-- גלריית תמונות -->
+                <div id="post-gallery" class="post-gallery" style="display: none;">
+                    <h4>גלריית תמונות</h4>
+                    <div id="gallery-grid" class="gallery-grid"></div>
+                </div>
+            </article>
+
+            <!-- מערכת תגובות -->
+            <section class="comments-section">
+                <h3 class="comments-title">תגובות</h3>
+                
+                <!-- טופס הוספת תגובה -->
+                <div class="comment-form">
+                    <h4>הוסף תגובה</h4>
+                    <form id="comment-form">
+                        <div class="form-group">
+                            <label for="comment-name">שם:</label>
+                            <input type="text" id="comment-name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment-email">אימייל:</label>
+                            <input type="email" id="comment-email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment-content">תגובה:</label>
+                            <textarea id="comment-content" name="content" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">שלח תגובה</button>
+                    </form>
+                </div>
+
+                <!-- רשימת תגובות -->
+                <div id="comments-list" class="comments-list">
+                    <div class="loading">טוען תגובות...</div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>אתר החדשות</h4>
+                    <p>המקום שלכם לחדשות מעודכנות ואמינות</p>
+                </div>
+                <div class="footer-section">
+                    <h4>קטגוריות</h4>
+                    <ul>
+                        <li><a href="#">חדשות</a></li>
+                        <li><a href="#">טכנולוגיה</a></li>
+                        <li><a href="#">ספורט</a></li>
+                        <li><a href="#">תרבות</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>צור קשר</h4>
+                    <p>info@news-site.com</p>
+                    <p>טלפון: 03-1234567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 אתר החדשות. כל הזכויות שמורות.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="post.js"></script>
+</body>
+</html> 

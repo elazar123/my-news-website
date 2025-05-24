@@ -1,0 +1,47 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/images"
+public_folder: "/assets/images"
+
+locale: 'he'
+
+collections:
+  - name: "posts"
+    label: "מאמרים"
+    folder: "posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "כותרת המאמר", name: "title", widget: "string"}
+      - {label: "כותרת משנה", name: "subtitle", widget: "string", required: false}
+      - {label: "תאריך פרסום", name: "date", widget: "datetime"}
+      - {label: "שם הכותב", name: "author", widget: "string"}
+      - {label: "תמונת הכותב", name: "author_image", widget: "image", required: false}
+      - {label: "סוג המאמר", name: "category", widget: "select", options: ["חדשות", "טכנולוגיה", "ספורט", "תרבות", "כלכלה", "בריאות", "חינוך", "דעה"]}
+      - {label: "תקציר", name: "excerpt", widget: "text"}
+      - {label: "תמונה ראשית", name: "featured_image", widget: "image", required: false}
+      - {label: "כיתוב לתמונה הראשית", name: "featured_image_caption", widget: "string", required: false}
+      - {label: "גלריית תמונות", name: "gallery", widget: "list", field: {label: "תמונה", name: "image", widget: "image"}, required: false}
+      - {label: "תוכן המאמר", name: "body", widget: "markdown"}
+      - {label: "תגיות", name: "tags", widget: "list", required: false}
+      - {label: "מפורסם", name: "published", widget: "boolean", default: true}
+      - {label: "מאמר דחוף", name: "urgent", widget: "boolean", default: false}
+      - {label: "מאמר מומלץ", name: "featured", widget: "boolean", default: false}
+
+  - name: "authors"
+    label: "כותבים"
+    folder: "authors"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "שם הכותב", name: "name", widget: "string"}
+      - {label: "תמונה", name: "image", widget: "image", required: false}
+      - {label: "תיאור קצר", name: "bio", widget: "text", required: false}
+      - {label: "אימייל", name: "email", widget: "string", required: false}
+      - {label: "רשתות חברתיות", name: "social", widget: "object", fields: [
+          {label: "טוויטר", name: "twitter", widget: "string", required: false},
+          {label: "לינקדאין", name: "linkedin", widget: "string", required: false},
+          {label: "פייסבוק", name: "facebook", widget: "string", required: false}
+        ], required: false} 
