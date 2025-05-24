@@ -14,7 +14,8 @@ async function loadArticles() {
             '2024-01-03-breaking-news.md',
             '2025-05-24-welcome-post.md',
             '2025-05-24-tech-news.md',
-            '2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md'
+            '2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md',
+            '2025-05-24-professional-demo.md'
         ];
         
         articlesGrid.innerHTML = '<div class="loading">טוען מאמרים...</div>';

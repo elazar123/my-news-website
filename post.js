@@ -9,7 +9,7 @@ async function loadPost() {
     }
     
     try {
-        const response = await fetch(`posts/${postFile}`);
+        const response = await fetch(`posts/${encodeURIComponent(postFile)}`);
         if (!response.ok) {
             throw new Error('המאמר לא נמצא');
         }
@@ -18,7 +18,7 @@ async function loadPost() {
         const article = parseMarkdown(content);
         
         // עדכון כותרת הדף
-        document.title = `${article.frontmatter.title || 'מאמר'} - אתר החדשות`;
+        document.title = `${article.frontmatter.title || 'מאמר'} - אתר החדשות המקצועי`;
         document.getElementById('post-title').textContent = article.frontmatter.title || 'מאמר';
         
         // עדכון כותרת המאמר
@@ -31,17 +31,13 @@ async function loadPost() {
             subtitleElement.style.display = 'block';
         }
         
-        // עדכון קטגוריה
+        // עדכון קטגוריה בתג המקצועי
         if (article.frontmatter.category) {
             const categoryContainer = document.getElementById('post-category-container');
-            let categoryClass = '';
-            if (article.frontmatter.urgent) categoryClass = 'urgent';
-            else if (article.frontmatter.featured) categoryClass = 'featured';
-            
-            categoryContainer.innerHTML = `<span class="post-category ${categoryClass}">${article.frontmatter.category}</span>`;
+            categoryContainer.innerHTML = `<span class="post-category-badge">${article.frontmatter.category}</span>`;
         }
         
-        // עדכון תמונה ראשית
+        // עדכון תמונה ראשית מקצועית
         if (article.frontmatter.featured_image) {
             const imageElement = document.getElementById('post-featured-image');
             imageElement.src = article.frontmatter.featured_image;
@@ -76,8 +72,16 @@ async function loadPost() {
             displayGallery(article.frontmatter.gallery);
         }
         
+        // הצגת תגיות
+        if (article.frontmatter.tags && article.frontmatter.tags.length > 0) {
+            displayTags(article.frontmatter.tags);
+        }
+        
         // טעינת תגובות
         loadComments(postFile);
+        
+        // הוספת פונקציונליות לכפתורי הפעולה
+        setupActionButtons(article);
         
     } catch (error) {
         console.error('שגיאה בטעינת המאמר:', error);
@@ -85,25 +89,95 @@ async function loadPost() {
     }
 }
 
-// פונקציה להצגת גלריית תמונות
+// פונקציה להצגת תגיות
+function displayTags(tags) {
+    const tagsSection = document.getElementById('post-tags');
+    const tagsContainer = document.getElementById('tags-container');
+    
+    if (!tagsContainer) return;
+    
+    tagsContainer.innerHTML = '';
+    tags.forEach(tag => {
+        const tagElement = document.createElement('span');
+        tagElement.className = 'tag';
+        tagElement.textContent = tag;
+        tagsContainer.appendChild(tagElement);
+    });
+    
+    tagsSection.style.display = 'block';
+}
+
+// פונקציה להגדרת כפתורי הפעולה
+function setupActionButtons(article) {
+    const shareBtn = document.querySelector('.share-btn');
+    const saveBtn = document.querySelector('.save-btn');
+    
+    if (shareBtn) {
+        shareBtn.addEventListener('click', () => shareArticle(article));
+    }
+    
+    if (saveBtn) {
+        saveBtn.addEventListener('click', () => saveArticle(article));
+    }
+}
+
+// פונקציה לשיתוף מאמר
+function shareArticle(article) {
+    if (navigator.share) {
+        navigator.share({
+            title: article.frontmatter.title,
+            text: article.frontmatter.excerpt || article.frontmatter.subtitle,
+            url: window.location.href
+        });
+    } else {
+        // העתקה ללוח
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            showSuccessMessage('הקישור הועתק ללוח!');
+        });
+    }
+}
+
+// פונקציה לשמירת מאמר
+function saveArticle(article) {
+    const savedArticles = JSON.parse(localStorage.getItem('savedArticles') || '[]');
+    const articleData = {
+        title: article.frontmatter.title,
+        url: window.location.href,
+        date: new Date().toISOString()
+    };
+    
+    if (!savedArticles.find(saved => saved.url === articleData.url)) {
+        savedArticles.push(articleData);
+        localStorage.setItem('savedArticles', JSON.stringify(savedArticles));
+        showSuccessMessage('המאמר נשמר בהצלחה!');
+    } else {
+        showSuccessMessage('המאמר כבר שמור!');
+    }
+}
+
+// פונקציה להצגת גלריית תמונות מקצועית
 function displayGallery(gallery) {
     const gallerySection = document.getElementById('post-gallery');
     const galleryGrid = document.getElementById('gallery-grid');
     
     galleryGrid.innerHTML = '';
     gallery.forEach((imageUrl, index) => {
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-item';
+        
         const img = document.createElement('img');
         img.src = imageUrl;
         img.alt = `תמונה ${index + 1}`;
-        img.className = 'gallery-image';
         img.addEventListener('click', () => openImageModal(imageUrl));
-        galleryGrid.appendChild(img);
+        
+        galleryItem.appendChild(img);
+        galleryGrid.appendChild(galleryItem);
     });
     
     gallerySection.style.display = 'block';
 }
 
-// פונקציה לפתיחת תמונה במודל (פשוט)
+// פונקציה לפתיחת תמונה במודל מקצועי
 function openImageModal(imageUrl) {
     const modal = document.createElement('div');
     modal.style.cssText = `
@@ -112,12 +186,13 @@ function openImageModal(imageUrl) {
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0,0,0,0.9);
+        background: rgba(0,0,0,0.95);
         display: flex;
         justify-content: center;
         align-items: center;
         z-index: 1000;
         cursor: pointer;
+        backdrop-filter: blur(5px);
     `;
     
     const img = document.createElement('img');
@@ -126,16 +201,41 @@ function openImageModal(imageUrl) {
         max-width: 90%;
         max-height: 90%;
         object-fit: contain;
+        border-radius: 10px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    `;
+    
+    const closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '✕';
+    closeBtn.style.cssText = `
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(255,255,255,0.2);
+        border: none;
+        color: white;
+        font-size: 24px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        backdrop-filter: blur(10px);
     `;
     
     modal.appendChild(img);
-    modal.addEventListener('click', () => document.body.removeChild(modal));
+    modal.appendChild(closeBtn);
+    
+    const closeModal = () => document.body.removeChild(modal);
+    modal.addEventListener('click', closeModal);
+    closeBtn.addEventListener('click', closeModal);
+    
     document.body.appendChild(modal);
 }
 
 // פונקציה לטעינת תגובות
 function loadComments(postFile) {
     const commentsList = document.getElementById('comments-list');
+    const commentsCount = document.getElementById('comments-count');
     
     // בפרויקט אמיתי, כאן נטען תגובות מהשרת
     // לעת עתה נציג תגובות דמה
@@ -151,8 +251,19 @@ function loadComments(postFile) {
             name: 'שרה לוי',
             date: '2024-01-03T14:15:00.000Z',
             content: 'נקודות מצוינות. האם יש לך מקורות נוספים בנושא?'
+        },
+        {
+            id: 3,
+            name: 'דוד אברהם',
+            date: '2024-01-03T16:45:00.000Z',
+            content: 'תוכן איכותי ומקצועי. ממליץ לכולם לקרוא!'
         }
     ];
+    
+    // עדכון מספר התגובות
+    if (commentsCount) {
+        commentsCount.textContent = `${demoComments.length} תגובות`;
+    }
     
     displayComments(demoComments);
 }
