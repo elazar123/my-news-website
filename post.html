@@ -3,22 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="post-title">מאמר - אתר החדשות</title>
+    <title id="post-title">מאמר - אתר החדשות המקצועי</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <h1 class="logo">📰 אתר החדשות</h1>
+            <h1 class="logo">📰 אתר החדשות המקצועי</h1>
             <nav class="nav">
-                <a href="index.html" class="nav-link">כל החדשות</a>
-                <a href="#" class="nav-link" data-category="חדשות">חדשות</a>
-                <a href="#" class="nav-link" data-category="טכנולוגיה">טכנולוגיה</a>
-                <a href="#" class="nav-link" data-category="ספורט">ספורט</a>
-                <a href="#" class="nav-link" data-category="תרבות">תרבות</a>
-                <a href="/admin" class="nav-link admin-link">ניהול</a>
+                <a href="index.html" class="nav-link">כל התוכן</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">כותבים ▼</a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item" data-filter="author" data-value="אלעזר ריגר">אלעזר ריגר</a>
+                        <a href="#" class="dropdown-item" data-filter="author" data-value="יוחנן דו">יוחנן דו</a>
+                        <a href="#" class="dropdown-item" data-filter="author" data-value="שרה כהן">שרה כהן</a>
+                        <a href="#" class="dropdown-item" data-filter="author" data-value="דוד לוי">דוד לוי</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">סוגי תוכן ▼</a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item" data-filter="category" data-value="עדכונים">עדכונים</a>
+                        <a href="#" class="dropdown-item" data-filter="category" data-value="כתבות">כתבות</a>
+                        <a href="#" class="dropdown-item" data-filter="category" data-value="קמפיין">קמפיין</a>
+                        <a href="#" class="dropdown-item" data-filter="category" data-value="מאמר שבועי">מאמר שבועי</a>
+                        <a href="#" class="dropdown-item" data-filter="category" data-value="דעה">דעה</a>
+                    </div>
+                </div>
+                <a href="/admin" class="nav-link admin-link">ניהול תוכן</a>
             </nav>
         </div>
     </header>
@@ -27,53 +42,82 @@
         <div class="container">
             <a href="index.html" class="back-link">← חזרה לעמוד הבית</a>
             
-            <article class="post">
+            <article class="post-article">
+                <!-- תמונה ראשית מקצועית -->
+                <div class="post-hero">
+                    <img id="post-featured-image" class="post-hero-image" style="display: none;">
+                    <div class="post-hero-overlay">
+                        <div id="post-category-container" class="post-category-badge"></div>
+                    </div>
+                </div>
+
+                <!-- כותרת ומטא-דטה -->
                 <header class="post-header">
-                    <div id="post-category-container"></div>
-                    <img id="post-featured-image" class="post-featured-image" style="display: none;">
                     <h1 id="article-title" class="post-title">טוען מאמר...</h1>
                     <p id="article-subtitle" class="post-subtitle" style="display: none;"></p>
-                    <div id="article-meta" class="post-meta">
-                        <div id="post-author-info" class="post-author-info">
-                            <img id="author-avatar" class="post-author-avatar" style="display: none;">
-                            <span id="article-author"></span>
+                    
+                    <div class="post-meta-section">
+                        <div id="post-author-info" class="post-author-card">
+                            <img id="author-avatar" class="author-profile-image" style="display: none;">
+                            <div class="author-details">
+                                <span id="article-author" class="author-name"></span>
+                                <span id="article-date" class="publish-date"></span>
+                            </div>
                         </div>
-                        <span id="article-date"></span>
+                        
+                        <div class="post-actions">
+                            <button class="action-btn share-btn">📤 שתף</button>
+                            <button class="action-btn save-btn">🔖 שמור</button>
+                        </div>
                     </div>
                 </header>
                 
-                <div id="article-content" class="post-content">
-                    <div class="loading">טוען תוכן המאמר...</div>
-                </div>
+                <!-- תוכן המאמר -->
+                <div class="post-content-wrapper">
+                    <div id="article-content" class="post-content">
+                        <div class="loading">טוען תוכן המאמר...</div>
+                    </div>
 
-                <!-- גלריית תמונות -->
-                <div id="post-gallery" class="post-gallery" style="display: none;">
-                    <h4>גלריית תמונות</h4>
-                    <div id="gallery-grid" class="gallery-grid"></div>
+                    <!-- גלריית תמונות מקצועית -->
+                    <div id="post-gallery" class="post-gallery" style="display: none;">
+                        <h4 class="gallery-title">גלריית תמונות</h4>
+                        <div id="gallery-grid" class="gallery-grid"></div>
+                    </div>
+
+                    <!-- תגיות -->
+                    <div id="post-tags" class="post-tags" style="display: none;">
+                        <h5>תגיות:</h5>
+                        <div id="tags-container" class="tags-container"></div>
+                    </div>
                 </div>
             </article>
 
-            <!-- מערכת תגובות -->
+            <!-- מערכת תגובות מקצועית -->
             <section class="comments-section">
-                <h3 class="comments-title">תגובות</h3>
+                <div class="comments-header">
+                    <h3 class="comments-title">💬 תגובות</h3>
+                    <span id="comments-count" class="comments-count">0 תגובות</span>
+                </div>
                 
                 <!-- טופס הוספת תגובה -->
-                <div class="comment-form">
-                    <h4>הוסף תגובה</h4>
-                    <form id="comment-form">
-                        <div class="form-group">
-                            <label for="comment-name">שם:</label>
-                            <input type="text" id="comment-name" name="name" required>
+                <div class="comment-form-wrapper">
+                    <h4 class="form-title">הוסף תגובה</h4>
+                    <form id="comment-form" class="comment-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="comment-name">שם מלא</label>
+                                <input type="text" id="comment-name" name="name" required placeholder="הכנס את שמך">
+                            </div>
+                            <div class="form-group">
+                                <label for="comment-email">כתובת אימייל</label>
+                                <input type="email" id="comment-email" name="email" required placeholder="your@email.com">
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="comment-email">אימייל:</label>
-                            <input type="email" id="comment-email" name="email" required>
+                            <label for="comment-content">תוכן התגובה</label>
+                            <textarea id="comment-content" name="content" rows="4" required placeholder="כתוב את תגובתך כאן..."></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="comment-content">תגובה:</label>
-                            <textarea id="comment-content" name="content" rows="4" required></textarea>
-                        </div>
-                        <button type="submit" class="submit-btn">שלח תגובה</button>
+                        <button type="submit" class="submit-btn">📝 פרסם תגובה</button>
                     </form>
                 </div>
 
@@ -89,16 +133,25 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4>אתר החדשות</h4>
-                    <p>המקום שלכם לחדשות מעודכנות ואמינות</p>
+                    <h4>אתר החדשות המקצועי</h4>
+                    <p>המקום שלכם לתוכן איכותי ומקצועי</p>
                 </div>
                 <div class="footer-section">
-                    <h4>קטגוריות</h4>
+                    <h4>סוגי תוכן</h4>
                     <ul>
-                        <li><a href="#">חדשות</a></li>
-                        <li><a href="#">טכנולוגיה</a></li>
-                        <li><a href="#">ספורט</a></li>
-                        <li><a href="#">תרבות</a></li>
+                        <li><a href="#" data-filter="category" data-value="עדכונים">עדכונים</a></li>
+                        <li><a href="#" data-filter="category" data-value="כתבות">כתבות</a></li>
+                        <li><a href="#" data-filter="category" data-value="קמפיין">קמפיין</a></li>
+                        <li><a href="#" data-filter="category" data-value="מאמר שבועי">מאמר שבועי</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>כותבים</h4>
+                    <ul>
+                        <li><a href="#" data-filter="author" data-value="אלעזר ריגר">אלעזר ריגר</a></li>
+                        <li><a href="#" data-filter="author" data-value="יוחנן דו">יוחנן דו</a></li>
+                        <li><a href="#" data-filter="author" data-value="שרה כהן">שרה כהן</a></li>
+                        <li><a href="#" data-filter="author" data-value="דוד לוי">דוד לוי</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -108,7 +161,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 אתר החדשות. כל הזכויות שמורות.</p>
+                <p>&copy; 2024 אתר החדשות המקצועי. כל הזכויות שמורות.</p>
             </div>
         </div>
     </footer>
