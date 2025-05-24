@@ -2,37 +2,48 @@
 let allArticles = [];
 let currentFilter = 'all';
 
+// מאמרים לדוגמה
+const posts = [
+    {
+        filename: '2025-05-24-gideon-warriors.md',
+        title: 'הברכיים שלא כרעו לבעל, והחיילים שלא נכנעים לחמאס',
+        excerpt: 'בין שלושת שלבי הקרב של גדעון – אמונה, יוזמה וניצחון – טמון מסר חד לימי הלחימה בעזה: לא עוצרים באמצע. כמו גדעון, גם אנחנו חייבים להאמין, להוביל, ולהמשיך עד להשמדה מוחלטת של האויב.',
+        author: 'אלעזר ריגר',
+        date: '2025-05-24',
+        category: 'דעה',
+        image: '/assets/images/whatsapp-image-2025-05-24-at-20.55.11.jpeg',
+        urgent: false,
+        featured: false
+    }
+];
+
 // פונקציה לטעינת מאמרים
 async function loadArticles() {
     const articlesGrid = document.getElementById('articles-grid');
     
     try {
-        // רק המאמר שלך
-        const articles = [
-            '2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md'
-        ];
-        
         articlesGrid.innerHTML = '<div class="loading">טוען מאמרים...</div>';
         allArticles = [];
         
-        for (const articleFile of articles) {
-            try {
-                const response = await fetch(`posts/${encodeURIComponent(articleFile)}`);
-                if (!response.ok) {
-                    console.error(`לא ניתן לטעון את המאמר: ${articleFile}`);
-                    continue;
-                }
-                
-                const content = await response.text();
-                const article = parseMarkdown(content);
-                article.filename = articleFile;
-                
-                if (article.frontmatter.published !== false) {
-                    allArticles.push(article);
-                }
-            } catch (error) {
-                console.error(`שגיאה בטעינת מאמר ${articleFile}:`, error);
-            }
+        // השתמש במערך posts במקום לטעון מקבצים
+        for (const post of posts) {
+            const article = {
+                frontmatter: {
+                    title: post.title,
+                    excerpt: post.excerpt,
+                    author: post.author,
+                    date: post.date,
+                    category: post.category,
+                    featured_image: post.image,
+                    urgent: post.urgent,
+                    featured: post.featured,
+                    published: true
+                },
+                content: post.excerpt,
+                filename: post.filename
+            };
+            
+            allArticles.push(article);
         }
         
         if (allArticles.length === 0) {
