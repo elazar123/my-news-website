@@ -25,7 +25,7 @@ async function loadArticles() {
         articlesGrid.innerHTML = '<div class="loading">טוען מאמרים...</div>';
         allArticles = [];
         
-        // רשימת המאמרים הקיימים + חיפוש אוטומטי למאמרים חדשים
+        // רשימת המאמרים הקיימים - טעינה מהירה
         const knownFiles = [
             '2025-05-24-gideon-warriors.md',
             '2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md',
@@ -36,12 +36,8 @@ async function loadArticles() {
             '2025-05-24-עדכון.md'
         ];
         
-        // חיפוש אוטומטי למאמרים חדשים
-        const additionalFiles = await findNewArticles();
-        const allFiles = [...knownFiles, ...additionalFiles];
-        
-        // טעינת כל המאמרים
-        for (const filename of allFiles) {
+        // טעינה מהירה של קבצים ידועים
+        const loadPromises = knownFiles.map(async (filename) => {
             try {
                 const response = await fetch(`posts/${encodeURIComponent(filename)}`);
                 if (response.ok) {
@@ -50,13 +46,18 @@ async function loadArticles() {
                     article.filename = filename;
                     
                     if (article.frontmatter.published !== false) {
-                        allArticles.push(article);
+                        return article;
                     }
                 }
             } catch (error) {
                 // שקט - קובץ לא קיים
             }
-        }
+            return null;
+        });
+        
+        // חכה לכל הטעינות במקביל
+        const results = await Promise.all(loadPromises);
+        allArticles = results.filter(article => article !== null);
         
         if (allArticles.length === 0) {
             articlesGrid.innerHTML = '<div class="loading">אין מאמרים זמינים כרגע</div>';
@@ -72,72 +73,65 @@ async function loadArticles() {
         // הצגת מאמרים לפי קטגוריות
         displayCategorizedArticles();
         
+        // בדיקה מהירה למאמרים חדשים ברקע (לא חוסמת)
+        setTimeout(() => {
+            findNewArticlesQuick();
+        }, 100);
+        
     } catch (error) {
         console.error('שגיאה בטעינת מאמרים:', error);
         articlesGrid.innerHTML = '<div class="loading">שגיאה בטעינת המאמרים</div>';
     }
 }
 
-// פונקציה לחיפוש מאמרים חדשים
-async function findNewArticles() {
-    const newFiles = [];
-    const currentDate = new Date();
+// פונקציה מהירה לחיפוש מאמרים חדשים
+async function findNewArticlesQuick() {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
     
-    // חיפוש מאמרים מהשבועיים האחרונים
-    for (let daysBack = 0; daysBack <= 14; daysBack++) {
-        const date = new Date(currentDate);
-        date.setDate(date.getDate() - daysBack);
-        
+    const dates = [today, yesterday];
+    const quickPatterns = ['מאמר-חדש', 'עדכון', 'כתבה', 'דעה', 'חדשות', 'post', 'article', 'news'];
+    
+    for (const date of dates) {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
         const datePrefix = `${year}-${month}-${day}`;
         
-        // תבניות שמות נפוצות שאתה עלול להשתמש בהן
-        const patterns = [
-            'מאמר-חדש', 'עדכון', 'כתבה', 'דעה', 'חדשות', 'הודעה',
-            'post', 'article', 'news', 'update', 'opinion',
-            'test', 'בדיקה', 'ניסיון'
-        ];
-        
-        // בדיקת כל תבנית
-        for (const pattern of patterns) {
+        for (const pattern of quickPatterns) {
             const filename = `${datePrefix}-${pattern}.md`;
             
-            try {
-                const response = await fetch(`posts/${encodeURIComponent(filename)}`, { method: 'HEAD' });
-                if (response.ok) {
-                    newFiles.push(filename);
-                }
-            } catch (error) {
-                // שקט - קובץ לא קיים
+            // דלג אם כבר יש לנו את הקובץ
+            if (allArticles.some(article => article.filename === filename)) {
+                continue;
             }
-        }
-        
-        // גם בדיקה של קבצים עם שמות ארוכים יותר (כמו שלך)
-        const longPatterns = [
-            'הברכיים-שלא-כרעו',
-            'אני-רוצה-לבדוק',
-            'gideon-warriors',
-            'מאמר-מיוחד',
-            'כתבה-חשובה'
-        ];
-        
-        for (const pattern of longPatterns) {
-            const filename = `${datePrefix}-${pattern}.md`;
             
             try {
                 const response = await fetch(`posts/${encodeURIComponent(filename)}`, { method: 'HEAD' });
                 if (response.ok) {
-                    newFiles.push(filename);
+                    // מצאנו קובץ חדש - טען אותו
+                    const contentResponse = await fetch(`posts/${encodeURIComponent(filename)}`);
+                    if (contentResponse.ok) {
+                        const content = await contentResponse.text();
+                        const article = parseMarkdown(content);
+                        article.filename = filename;
+                        
+                        if (article.frontmatter.published !== false) {
+                            allArticles.push(article);
+                            
+                            // עדכן תצוגה
+                            allArticles.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
+                            displayAllArticles();
+                            displayCategorizedArticles();
+                        }
+                    }
                 }
             } catch (error) {
                 // שקט - קובץ לא קיים
             }
         }
     }
-    
-    return newFiles;
 }
 
 // פונקציה להצגת כל המאמרים ברשת כרטיסים
