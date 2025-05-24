@@ -7,11 +7,14 @@ async function loadArticles() {
     const articlesGrid = document.getElementById('articles-grid');
     
     try {
-        // רשימת מאמרים (בפרויקט אמיתי זה יגיע מ-API או מקובץ index)
+        // רשימת מאמרים מעודכנת עם כל המאמרים החדשים
         const articles = [
             '2024-01-01-welcome-post.md',
             '2024-01-02-technology-trends.md',
-            '2024-01-03-breaking-news.md'
+            '2024-01-03-breaking-news.md',
+            '2025-05-24-welcome-post.md',
+            '2025-05-24-tech-news.md',
+            '2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md'
         ];
         
         articlesGrid.innerHTML = '<div class="loading">טוען מאמרים...</div>';
@@ -19,7 +22,7 @@ async function loadArticles() {
         
         for (const articleFile of articles) {
             try {
-                const response = await fetch(`posts/${articleFile}`);
+                const response = await fetch(`posts/${encodeURIComponent(articleFile)}`);
                 if (!response.ok) continue;
                 
                 const content = await response.text();
