@@ -45,26 +45,14 @@ async function loadPost() {
     }
     
     try {
-        // חיפוש המאמר במערך
-        const post = posts.find(p => p.filename === postFile);
-        if (!post) {
+        // טעינת המאמר מהקובץ
+        const response = await fetch(`posts/${encodeURIComponent(postFile)}`);
+        if (!response.ok) {
             throw new Error('המאמר לא נמצא');
         }
         
-        // יצירת אובייקט article
-        const article = {
-            frontmatter: {
-                title: post.title,
-                subtitle: post.subtitle,
-                author: post.author,
-                author_image: post.author_image,
-                date: post.date,
-                category: post.category,
-                featured_image: post.image,
-                excerpt: post.excerpt
-            },
-            content: post.content
-        };
+        const content = await response.text();
+        const article = parseMarkdown(content);
         
         // עדכון כותרת הדף
         document.title = `${article.frontmatter.title || 'מאמר'} - נלחמים על החיים`;
@@ -116,9 +104,9 @@ async function loadPost() {
         const contentElement = document.getElementById('article-content');
         contentElement.innerHTML = markdownToHtml(article.content);
         
-        // הצגת גלריית תמונות
+        // הצגת גלריית תמונות כקרוסלה
         if (article.frontmatter.gallery && article.frontmatter.gallery.length > 0) {
-            displayGallery(article.frontmatter.gallery);
+            displayCarouselGallery(article.frontmatter.gallery);
         }
         
         // הצגת תגיות
@@ -512,4 +500,269 @@ document.addEventListener('DOMContentLoaded', () => {
     if (commentForm) {
         commentForm.addEventListener('submit', handleCommentSubmit);
     }
-}); 
+});
+
+// פונקציה להצגת גלריית תמונות כקרוסלה מתקדמת
+function displayCarouselGallery(gallery) {
+    const gallerySection = document.getElementById('post-gallery');
+    const galleryGrid = document.getElementById('gallery-grid');
+    
+    if (!gallery || gallery.length === 0) return;
+    
+    // הגבלה ל-8 תמונות
+    const limitedGallery = gallery.slice(0, 8);
+    
+    galleryGrid.innerHTML = `
+        <div class="carousel-container">
+            <div class="carousel-wrapper">
+                <div class="carousel-track" id="carousel-track">
+                    ${limitedGallery.map((imageUrl, index) => `
+                        <div class="carousel-slide ${index === 0 ? 'active' : ''}">
+                            <img src="${imageUrl}" alt="תמונה ${index + 1}" onclick="openImageModal('${imageUrl}')">
+                        </div>
+                    `).join('')}
+                </div>
+                
+                ${limitedGallery.length > 1 ? `
+                    <button class="carousel-btn carousel-prev" onclick="moveCarousel(-1)">❮</button>
+                    <button class="carousel-btn carousel-next" onclick="moveCarousel(1)">❯</button>
+                ` : ''}
+            </div>
+            
+            ${limitedGallery.length > 1 ? `
+                <div class="carousel-indicators">
+                    ${limitedGallery.map((_, index) => `
+                        <button class="indicator ${index === 0 ? 'active' : ''}" onclick="goToSlide(${index})"></button>
+                    `).join('')}
+                </div>
+            ` : ''}
+            
+            <div class="gallery-counter">
+                <span id="current-slide">1</span> / ${limitedGallery.length}
+            </div>
+        </div>
+    `;
+    
+    // הוספת CSS לקרוסלה
+    if (!document.getElementById('carousel-styles')) {
+        const style = document.createElement('style');
+        style.id = 'carousel-styles';
+        style.textContent = `
+            .carousel-container {
+                position: relative;
+                max-width: 800px;
+                margin: 2rem auto;
+                background: #f8f9fa;
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+            
+            .carousel-wrapper {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .carousel-track {
+                display: flex;
+                transition: transform 0.5s ease-in-out;
+            }
+            
+            .carousel-slide {
+                min-width: 100%;
+                position: relative;
+            }
+            
+            .carousel-slide img {
+                width: 100%;
+                height: 400px;
+                object-fit: cover;
+                cursor: pointer;
+                transition: transform 0.3s ease;
+            }
+            
+            .carousel-slide img:hover {
+                transform: scale(1.02);
+            }
+            
+            .carousel-btn {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                background: rgba(0,0,0,0.7);
+                color: white;
+                border: none;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                font-size: 18px;
+                cursor: pointer;
+                z-index: 10;
+                transition: all 0.3s ease;
+            }
+            
+            .carousel-btn:hover {
+                background: rgba(0,0,0,0.9);
+                transform: translateY(-50%) scale(1.1);
+            }
+            
+            .carousel-prev {
+                left: 15px;
+            }
+            
+            .carousel-next {
+                right: 15px;
+            }
+            
+            .carousel-indicators {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                padding: 20px;
+                background: linear-gradient(135deg, var(--primary-gold), var(--primary-teal));
+            }
+            
+            .indicator {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                border: 2px solid rgba(255,255,255,0.5);
+                background: transparent;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            
+            .indicator.active,
+            .indicator:hover {
+                background: white;
+                border-color: white;
+                transform: scale(1.2);
+            }
+            
+            .gallery-counter {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background: rgba(0,0,0,0.7);
+                color: white;
+                padding: 8px 15px;
+                border-radius: 20px;
+                font-size: 14px;
+                font-weight: 500;
+            }
+            
+            @media (max-width: 768px) {
+                .carousel-btn {
+                    width: 40px;
+                    height: 40px;
+                    font-size: 14px;
+                }
+                
+                .carousel-prev {
+                    left: 10px;
+                }
+                
+                .carousel-next {
+                    right: 10px;
+                }
+                
+                .carousel-slide img {
+                    height: 250px;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    gallerySection.style.display = 'block';
+    
+    // משתנים גלובליים לקרוסלה
+    window.currentSlideIndex = 0;
+    window.totalSlides = limitedGallery.length;
+}
+
+// פונקציות לניהול הקרוסלה
+window.moveCarousel = function(direction) {
+    const track = document.getElementById('carousel-track');
+    const indicators = document.querySelectorAll('.indicator');
+    const counter = document.getElementById('current-slide');
+    
+    window.currentSlideIndex += direction;
+    
+    if (window.currentSlideIndex >= window.totalSlides) {
+        window.currentSlideIndex = 0;
+    } else if (window.currentSlideIndex < 0) {
+        window.currentSlideIndex = window.totalSlides - 1;
+    }
+    
+    const translateX = -window.currentSlideIndex * 100;
+    track.style.transform = `translateX(${translateX}%)`;
+    
+    // עדכון אינדיקטורים
+    indicators.forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === window.currentSlideIndex);
+    });
+    
+    // עדכון מונה
+    counter.textContent = window.currentSlideIndex + 1;
+};
+
+window.goToSlide = function(slideIndex) {
+    const track = document.getElementById('carousel-track');
+    const indicators = document.querySelectorAll('.indicator');
+    const counter = document.getElementById('current-slide');
+    
+    window.currentSlideIndex = slideIndex;
+    
+    const translateX = -slideIndex * 100;
+    track.style.transform = `translateX(${translateX}%)`;
+    
+    // עדכון אינדיקטורים
+    indicators.forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === slideIndex);
+    });
+    
+    // עדכון מונה
+    counter.textContent = slideIndex + 1;
+};
+
+// הוספת תמיכה במקלדת וטאצ'
+document.addEventListener('keydown', function(e) {
+    if (document.querySelector('.carousel-container')) {
+        if (e.key === 'ArrowLeft') {
+            window.moveCarousel(-1);
+        } else if (e.key === 'ArrowRight') {
+            window.moveCarousel(1);
+        }
+    }
+});
+
+// תמיכה בטאצ' למובייל
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    if (document.querySelector('.carousel-container')) {
+        handleSwipe();
+    }
+});
+
+function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+    
+    if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+            // החלקה שמאלה - תמונה הבאה
+            window.moveCarousel(1);
+        } else {
+            // החלקה ימינה - תמונה קודמת
+            window.moveCarousel(-1);
+        }
+    }
+} 

@@ -17,7 +17,7 @@ const posts = [
     }
 ];
 
-// פונקציה לטעינת מאמרים
+// פונקציה לטעינת מאמרים אוטומטית מתיקיית posts
 async function loadArticles() {
     const articlesGrid = document.getElementById('articles-grid');
     
@@ -25,25 +25,41 @@ async function loadArticles() {
         articlesGrid.innerHTML = '<div class="loading">טוען מאמרים...</div>';
         allArticles = [];
         
-        // השתמש במערך posts במקום לטעון מקבצים
-        for (const post of posts) {
-            const article = {
-                frontmatter: {
-                    title: post.title,
-                    excerpt: post.excerpt,
-                    author: post.author,
-                    date: post.date,
-                    category: post.category,
-                    featured_image: post.image,
-                    urgent: post.urgent,
-                    featured: post.featured,
-                    published: true
-                },
-                content: post.excerpt,
-                filename: post.filename
-            };
-            
-            allArticles.push(article);
+        // קבלת רשימת קבצים מתיקיית posts
+        const response = await fetch('posts/');
+        const html = await response.text();
+        
+        // חילוץ שמות קבצים מה-HTML
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const links = doc.querySelectorAll('a[href$=".md"]');
+        
+        const articleFiles = Array.from(links).map(link => link.getAttribute('href'));
+        
+        if (articleFiles.length === 0) {
+            articlesGrid.innerHTML = '<div class="loading">אין מאמרים זמינים כרגע</div>';
+            return;
+        }
+        
+        // טעינת כל המאמרים
+        for (const articleFile of articleFiles) {
+            try {
+                const response = await fetch(`posts/${encodeURIComponent(articleFile)}`);
+                if (!response.ok) {
+                    console.error(`לא ניתן לטעון את המאמר: ${articleFile}`);
+                    continue;
+                }
+                
+                const content = await response.text();
+                const article = parseMarkdown(content);
+                article.filename = articleFile;
+                
+                if (article.frontmatter.published !== false) {
+                    allArticles.push(article);
+                }
+            } catch (error) {
+                console.error(`שגיאה בטעינת מאמר ${articleFile}:`, error);
+            }
         }
         
         if (allArticles.length === 0) {
@@ -62,6 +78,56 @@ async function loadArticles() {
         
     } catch (error) {
         console.error('שגיאה בטעינת מאמרים:', error);
+        // אם יש בעיה עם הטעינה האוטומטית, ננסה לטעון קבצים ידועים
+        await loadKnownArticles();
+    }
+}
+
+// פונקציה לטעינת קבצים ידועים (fallback)
+async function loadKnownArticles() {
+    const articlesGrid = document.getElementById('articles-grid');
+    
+    try {
+        const knownFiles = [
+            '2025-05-24-gideon-warriors.md',
+            '2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md'
+        ];
+        
+        allArticles = [];
+        
+        for (const articleFile of knownFiles) {
+            try {
+                const response = await fetch(`posts/${encodeURIComponent(articleFile)}`);
+                if (!response.ok) continue;
+                
+                const content = await response.text();
+                const article = parseMarkdown(content);
+                article.filename = articleFile;
+                
+                if (article.frontmatter.published !== false) {
+                    allArticles.push(article);
+                }
+            } catch (error) {
+                console.error(`שגיאה בטעינת מאמר ${articleFile}:`, error);
+            }
+        }
+        
+        if (allArticles.length === 0) {
+            articlesGrid.innerHTML = '<div class="loading">אין מאמרים זמינים כרגע</div>';
+            return;
+        }
+        
+        // מיון מאמרים לפי תאריך (החדשים ראשונים)
+        allArticles.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
+        
+        // הצגת כל המאמרים ברשת כרטיסים
+        displayAllArticles();
+        
+        // הצגת מאמרים לפי קטגוריות
+        displayCategorizedArticles();
+        
+    } catch (error) {
+        console.error('שגיאה בטעינת מאמרים ידועים:', error);
         articlesGrid.innerHTML = '<div class="loading">שגיאה בטעינת המאמרים</div>';
     }
 }

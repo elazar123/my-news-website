@@ -20,29 +20,48 @@ collections:
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - {label: "כותרת המאמר", name: "title", widget: "string"}
+      - {label: "כותרת", name: "title", widget: "string"}
       - {label: "כותרת משנה", name: "subtitle", widget: "string", required: false}
-      - {label: "תאריך פרסום", name: "date", widget: "datetime"}
-      - label: "שם הכותב"
+      - {label: "תאריך", name: "date", widget: "datetime"}
+      - label: "כותב"
         name: "author"
-        widget: "select"
-        options: ["אלעזר ריגר", "יוחנן דו", "שרה כהן", "דוד לוי"]
-      - {label: "תמונת הכותב", name: "author_image", widget: "image", required: false}
-      - label: "סוג המאמר"
+        widget: "relation"
+        collection: "authors"
+        search_fields: ["name"]
+        value_field: "name"
+        display_fields: ["name"]
+        required: true
+      - label: "תמונת כותב"
+        name: "author_image"
+        widget: "relation"
+        collection: "authors"
+        search_fields: ["name"]
+        value_field: "image"
+        display_fields: ["name", "image"]
+        required: false
+      - label: "סוג מאמר"
         name: "category"
         widget: "select"
         options: ["עדכונים", "כתבות", "קמפיין", "מאמר שבועי", "דעה"]
       - {label: "תקציר", name: "excerpt", widget: "text"}
-      - {label: "תמונה ראשית", name: "featured_image", widget: "image"}
-      - {label: "כיתוב לתמונה", name: "image_caption", widget: "string", required: false}
-      - {label: "גלריית תמונות", name: "gallery", widget: "list", field: {label: "תמונה", name: "image", widget: "image"}, required: false}
-      - {label: "תוכן המאמר", name: "body", widget: "markdown"}
-      - {label: "תגיות", name: "tags", widget: "list", required: false}
+      - {label: "תמונה ראשית", name: "featured_image", widget: "image", required: false}
+      - label: "גלריית תמונות (עד 8 תמונות)"
+        name: "gallery"
+        widget: "list"
+        max: 8
+        field: {label: "תמונה", name: "image", widget: "image"}
+        required: false
+      - {label: "תוכן", name: "body", widget: "markdown"}
+      - label: "תגיות"
+        name: "tags"
+        widget: "list"
+        required: false
+        field: {label: "תגית", name: "tag", widget: "string"}
       - {label: "מפורסם", name: "published", widget: "boolean", default: true}
-      - {label: "מאמר דחוף", name: "urgent", widget: "boolean", default: false, required: false}
-      - {label: "מאמר מומלץ", name: "featured", widget: "boolean", default: false, required: false}
+      - {label: "מאמר דחוף", name: "urgent", widget: "boolean", default: false}
+      - {label: "מאמר מומלץ", name: "featured", widget: "boolean", default: false}
 
-  - name: "quick-posts"
+  - name: "quick_posts"
     label: "פוסט מהיר"
     label_singular: "פוסט מהיר"
     description: "פוסטים קצרים ומהירים - מושלם לטלפון 📱"
@@ -53,16 +72,27 @@ collections:
       - {label: "כותרת", name: "title", widget: "string"}
       - label: "כותב"
         name: "author"
-        widget: "select"
-        options: ["אלעזר ריגר", "יוחנן דו", "שרה כהן", "דוד לוי"]
+        widget: "relation"
+        collection: "authors"
+        search_fields: ["name"]
+        value_field: "name"
+        display_fields: ["name"]
+        default: "אלעזר ריגר"
       - label: "סוג תוכן"
         name: "category"
         widget: "select"
         options: ["עדכונים", "כתבות", "קמפיין", "מאמר שבועי", "דעה"]
-      - {label: "תמונה", name: "featured_image", widget: "image"}
+        default: "עדכונים"
       - {label: "תוכן", name: "body", widget: "markdown"}
-      - {label: "תאריך", name: "date", widget: "datetime", default: ""}
+      - {label: "תמונה", name: "featured_image", widget: "image", required: false}
+      - label: "גלריה מהירה (עד 5 תמונות)"
+        name: "gallery"
+        widget: "list"
+        max: 5
+        field: {label: "תמונה", name: "image", widget: "image"}
+        required: false
       - {label: "מפורסם", name: "published", widget: "boolean", default: true}
+      - {label: "דחוף", name: "urgent", widget: "boolean", default: false}
 
   - name: "authors"
     label: "כותבים"
@@ -72,9 +102,9 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - {label: "שם הכותב", name: "name", widget: "string"}
-      - {label: "תמונה", name: "image", widget: "image"}
-      - {label: "תיאור קצר", name: "bio", widget: "text"}
+      - {label: "שם", name: "name", widget: "string"}
+      - {label: "תמונה", name: "image", widget: "image", required: false}
+      - {label: "תיאור", name: "bio", widget: "text", required: false}
       - {label: "אימייל", name: "email", widget: "string", required: false}
       - {label: "טוויטר", name: "twitter", widget: "string", required: false}
       - {label: "לינקדאין", name: "linkedin", widget: "string", required: false}
