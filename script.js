@@ -207,7 +207,7 @@ function parseMarkdown(content) {
 }
 
 // פונקציה ליצירת כרטיס מאמר
-function createArticleCard(article, filename, isFeatured = false) {
+function createArticleCard(article, filename, isSmall = false) {
     const card = document.createElement('div');
     card.className = 'article-card';
     
@@ -220,24 +220,27 @@ function createArticleCard(article, filename, isFeatured = false) {
     const imageUrl = article.frontmatter.featured_image || '';
     
     // קביעת סוג הקטגוריה
-    let categoryClass = '';
-    if (article.frontmatter.urgent) categoryClass = 'urgent';
-    else if (article.frontmatter.featured || isFeatured) categoryClass = 'featured';
+    let categoryClass = `category-${category.replace(/\s+/g, '-')}`;
+    if (article.frontmatter.urgent) categoryClass += ' urgent-badge';
+    if (article.frontmatter.featured) categoryClass += ' featured-badge';
+    
+    // גודל כרטיס קטן יותר לקטגוריות
+    const cardStyle = isSmall ? 'style="max-height: 350px;"' : '';
+    const excerptText = isSmall ? excerpt.substring(0, 80) + '...' : excerpt;
     
     card.innerHTML = `
-        ${imageUrl ? `<img src="${imageUrl}" alt="${title}" class="article-image">` : '<div class="article-image"></div>'}
+        ${imageUrl ? `<img src="${imageUrl}" alt="${title}" class="article-image">` : '<div class="article-image" style="background: linear-gradient(135deg, var(--primary-gold), var(--primary-teal)); height: 200px;"></div>'}
         <div class="article-content">
             <span class="article-category ${categoryClass}">${category}</span>
-            <h3 class="article-title">${title}</h3>
-            ${subtitle ? `<p class="article-subtitle">${subtitle}</p>` : ''}
-            <p class="article-excerpt">${excerpt}</p>
+            <h3 class="article-title" style="${isSmall ? 'font-size: 1.1rem; line-height: 1.3;' : ''}">${title}</h3>
+            ${subtitle && !isSmall ? `<p class="article-subtitle" style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 0.5rem;">${subtitle}</p>` : ''}
+            <p class="article-excerpt" style="${isSmall ? 'font-size: 0.85rem; line-height: 1.4;' : ''}">${excerptText}</p>
             <div class="article-meta">
                 <div class="article-author">
-                    <span>${author}</span>
+                    <span style="${isSmall ? 'font-size: 0.8rem;' : ''}">${author}</span>
                 </div>
                 <div>
-                    <span class="article-date">${date}</span>
-                    <a href="post.html?post=${encodeURIComponent(filename)}" class="read-more">קרא עוד</a>
+                    <span class="article-date" style="${isSmall ? 'font-size: 0.8rem;' : ''}">${date}</span>
                 </div>
             </div>
         </div>
@@ -245,9 +248,7 @@ function createArticleCard(article, filename, isFeatured = false) {
     
     // הוספת אירוע קליק לכל הכרטיס
     card.addEventListener('click', (e) => {
-        if (!e.target.classList.contains('read-more')) {
-            window.location.href = `post.html?post=${encodeURIComponent(filename)}`;
-        }
+        window.location.href = `post.html?post=${encodeURIComponent(filename)}`;
     });
     
     return card;
