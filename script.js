@@ -7,12 +7,9 @@ async function loadArticles() {
     const articlesGrid = document.getElementById('articles-grid');
     
     try {
-        // רשימת מאמרים מעודכנת - רק המאמרים הקיימים
+        // רשימת מאמרים - רק הכתבה החדשה ביותר שלך
         const articles = [
-            '2025-05-24-welcome-post.md',
-            '2025-05-24-tech-news.md',
-            '2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md',
-            '2025-05-24-professional-demo.md'
+            '2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md'
         ];
         
         articlesGrid.innerHTML = '<div class="loading">טוען מאמרים...</div>';
@@ -111,7 +108,6 @@ function displayHeroArticle(article) {
             ${article.frontmatter.subtitle ? `<p class="hero-subtitle">${article.frontmatter.subtitle}</p>` : ''}
             <div class="hero-meta">
                 <div class="author-info">
-                    ${article.frontmatter.author_image ? `<img src="${article.frontmatter.author_image}" alt="${author}" class="author-avatar">` : ''}
                     <span>${author}</span>
                 </div>
                 <span>${date}</span>
@@ -214,7 +210,6 @@ function createArticleCard(article, filename, isFeatured = false) {
     const category = article.frontmatter.category || 'כללי';
     const author = article.frontmatter.author || 'כותב אלמוני';
     const imageUrl = article.frontmatter.featured_image || '';
-    const authorImage = article.frontmatter.author_image || '';
     
     // קביעת סוג הקטגוריה
     let categoryClass = '';
@@ -230,7 +225,6 @@ function createArticleCard(article, filename, isFeatured = false) {
             <p class="article-excerpt">${excerpt}</p>
             <div class="article-meta">
                 <div class="article-author">
-                    ${authorImage ? `<img src="${authorImage}" alt="${author}" class="article-author-avatar">` : ''}
                     <span>${author}</span>
                 </div>
                 <div>
