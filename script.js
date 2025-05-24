@@ -7,7 +7,7 @@ async function loadArticles() {
     const articlesGrid = document.getElementById('articles-grid');
     
     try {
-        // רשימת מאמרים - רק הכתבה החדשה ביותר שלך
+        // רק המאמר שלך
         const articles = [
             '2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md'
         ];
@@ -18,7 +18,10 @@ async function loadArticles() {
         for (const articleFile of articles) {
             try {
                 const response = await fetch(`posts/${encodeURIComponent(articleFile)}`);
-                if (!response.ok) continue;
+                if (!response.ok) {
+                    console.error(`לא ניתן לטעון את המאמר: ${articleFile}`);
+                    continue;
+                }
                 
                 const content = await response.text();
                 const article = parseMarkdown(content);
@@ -30,6 +33,11 @@ async function loadArticles() {
             } catch (error) {
                 console.error(`שגיאה בטעינת מאמר ${articleFile}:`, error);
             }
+        }
+        
+        if (allArticles.length === 0) {
+            articlesGrid.innerHTML = '<div class="loading">אין מאמרים זמינים כרגע</div>';
+            return;
         }
         
         // מיון מאמרים לפי תאריך (החדשים ראשונים)
