@@ -17,7 +17,7 @@ const posts = [
     }
 ];
 
-// פונקציה לטעינת מאמרים אוטומטית מתיקיית posts
+// פונקציה לטעינת מאמרים אוטומטית
 async function loadArticles() {
     const articlesGrid = document.getElementById('articles-grid');
     
@@ -25,40 +25,23 @@ async function loadArticles() {
         articlesGrid.innerHTML = '<div class="loading">טוען מאמרים...</div>';
         allArticles = [];
         
-        // קבלת רשימת קבצים מתיקיית posts
-        const response = await fetch('posts/');
-        const html = await response.text();
+        // ננסה לטעון מאמרים עם תבניות שמות שונות
+        const possibleFiles = await generatePossibleFilenames();
         
-        // חילוץ שמות קבצים מה-HTML
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const links = doc.querySelectorAll('a[href$=".md"]');
-        
-        const articleFiles = Array.from(links).map(link => link.getAttribute('href'));
-        
-        if (articleFiles.length === 0) {
-            articlesGrid.innerHTML = '<div class="loading">אין מאמרים זמינים כרגע</div>';
-            return;
-        }
-        
-        // טעינת כל המאמרים
-        for (const articleFile of articleFiles) {
+        for (const filename of possibleFiles) {
             try {
-                const response = await fetch(`posts/${encodeURIComponent(articleFile)}`);
-                if (!response.ok) {
-                    console.error(`לא ניתן לטעון את המאמר: ${articleFile}`);
-                    continue;
-                }
-                
-                const content = await response.text();
-                const article = parseMarkdown(content);
-                article.filename = articleFile;
-                
-                if (article.frontmatter.published !== false) {
-                    allArticles.push(article);
+                const response = await fetch(`posts/${encodeURIComponent(filename)}`);
+                if (response.ok) {
+                    const content = await response.text();
+                    const article = parseMarkdown(content);
+                    article.filename = filename;
+                    
+                    if (article.frontmatter.published !== false) {
+                        allArticles.push(article);
+                    }
                 }
             } catch (error) {
-                console.error(`שגיאה בטעינת מאמר ${articleFile}:`, error);
+                // שקט - זה נורמלי שחלק מהקבצים לא קיימים
             }
         }
         
@@ -78,58 +61,80 @@ async function loadArticles() {
         
     } catch (error) {
         console.error('שגיאה בטעינת מאמרים:', error);
-        // אם יש בעיה עם הטעינה האוטומטית, ננסה לטעון קבצים ידועים
-        await loadKnownArticles();
+        articlesGrid.innerHTML = '<div class="loading">שגיאה בטעינת המאמרים</div>';
     }
 }
 
-// פונקציה לטעינת קבצים ידועים (fallback)
-async function loadKnownArticles() {
-    const articlesGrid = document.getElementById('articles-grid');
+// פונקציה ליצירת רשימת שמות קבצים אפשריים
+async function generatePossibleFilenames() {
+    const filenames = [];
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1;
     
-    try {
-        const knownFiles = [
-            '2025-05-24-gideon-warriors.md',
-            '2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md'
-        ];
+    // ננסה תאריכים מהחודש הנוכחי ו-6 חודשים אחורה
+    for (let monthOffset = 0; monthOffset <= 6; monthOffset++) {
+        const date = new Date(currentYear, currentMonth - 1 - monthOffset, 1);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
         
-        allArticles = [];
-        
-        for (const articleFile of knownFiles) {
-            try {
-                const response = await fetch(`posts/${encodeURIComponent(articleFile)}`);
-                if (!response.ok) continue;
+        // ננסה כל יום בחודש
+        for (let day = 1; day <= 31; day++) {
+            const dayStr = String(day).padStart(2, '0');
+            const datePrefix = `${year}-${month}-${dayStr}`;
+            
+            // תבניות שמות נפוצות - כולל תבניות בעברית ובאנגלית
+            const commonPatterns = [
+                // תבניות קיימות
+                'gideon-warriors',
+                'הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס',
+                'אני-רוצה-לבדוק-אם-זה-עובד',
                 
-                const content = await response.text();
-                const article = parseMarkdown(content);
-                article.filename = articleFile;
+                // תבניות כלליות בעברית
+                'מאמר-חדש',
+                'עדכון-חשוב',
+                'כתבה-מיוחדת',
+                'דעה-אישית',
+                'קמפיין-חדש',
+                'מאמר-שבועי',
+                'חדשות-דחופות',
+                'הודעה-חשובה',
+                'מסר-לעם',
+                'קריאה-לפעולה',
                 
-                if (article.frontmatter.published !== false) {
-                    allArticles.push(article);
-                }
-            } catch (error) {
-                console.error(`שגיאה בטעינת מאמר ${articleFile}:`, error);
-            }
+                // תבניות באנגלית
+                'welcome-post',
+                'tech-news',
+                'breaking-news',
+                'article',
+                'post',
+                'news',
+                'update',
+                'opinion',
+                'campaign',
+                'weekly-article',
+                'urgent-news',
+                'important-message',
+                'call-to-action',
+                
+                // תבניות מספריות
+                'post-1', 'post-2', 'post-3', 'post-4', 'post-5',
+                'article-1', 'article-2', 'article-3', 'article-4', 'article-5',
+                'news-1', 'news-2', 'news-3', 'news-4', 'news-5',
+                
+                // תבניות עם מילים נפוצות
+                'test', 'בדיקה', 'ניסיון', 'demo', 'example', 'דוגמה'
+            ];
+            
+            commonPatterns.forEach(pattern => {
+                filenames.push(`${datePrefix}-${pattern}.md`);
+            });
+            
+            // גם ננסה בלי תבנית - רק תאריך
+            filenames.push(`${datePrefix}.md`);
         }
-        
-        if (allArticles.length === 0) {
-            articlesGrid.innerHTML = '<div class="loading">אין מאמרים זמינים כרגע</div>';
-            return;
-        }
-        
-        // מיון מאמרים לפי תאריך (החדשים ראשונים)
-        allArticles.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
-        
-        // הצגת כל המאמרים ברשת כרטיסים
-        displayAllArticles();
-        
-        // הצגת מאמרים לפי קטגוריות
-        displayCategorizedArticles();
-        
-    } catch (error) {
-        console.error('שגיאה בטעינת מאמרים ידועים:', error);
-        articlesGrid.innerHTML = '<div class="loading">שגיאה בטעינת המאמרים</div>';
     }
+    
+    return filenames;
 }
 
 // פונקציה להצגת כל המאמרים ברשת כרטיסים
