@@ -5,59 +5,80 @@ backend:
 media_folder: "assets/images"
 public_folder: "/assets/images"
 
+site_url: https://merry-heliotrope-83b40f.netlify.app
+display_url: https://merry-heliotrope-83b40f.netlify.app
+logo_url: https://merry-heliotrope-83b40f.netlify.app/logo.png
+
 locale: 'he'
 
 collections:
   - name: "posts"
-    label: "📝 מאמרים מלאים"
+    label: "מאמרים"
     label_singular: "מאמר"
     description: "מאמרים מפורטים עם כל האפשרויות"
     folder: "posts"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - {label: "📝 כותרת המאמר", name: "title", widget: "string", hint: "כותרת ברורה ומעניינת"}
-      - {label: "📄 תקציר קצר", name: "excerpt", widget: "text", hint: "2-3 משפטים המתארים את המאמר"}
-      - {label: "👤 כותב", name: "author", widget: "select", options: ["אלעזר ריגר", "יוחנן דו", "שרה כהן", "דוד לוי"], default: "אלעזר ריגר"}
-      - {label: "🏷️ סוג התוכן", name: "category", widget: "select", options: ["עדכונים", "כתבות", "קמפיין", "מאמר שבועי", "דעה"], default: "עדכונים"}
-      - {label: "🖼️ תמונה ראשית", name: "featured_image", widget: "image", required: false, hint: "תמונה שתופיע בראש המאמר"}
-      - {label: "📝 תוכן המאמר", name: "body", widget: "markdown", hint: "כתוב כאן את המאמר המלא"}
-      - {label: "📅 תאריך פרסום", name: "date", widget: "datetime", default: "{{now}}", format: "YYYY-MM-DD HH:mm"}
-      - {label: "✅ מפורסם", name: "published", widget: "boolean", default: true, hint: "האם המאמר יופיע באתר"}
-      - {label: "🚨 דחוף", name: "urgent", widget: "boolean", default: false, hint: "יופיע באדום כחדשה דחופה"}
-      - {label: "⭐ מומלץ", name: "featured", widget: "boolean", default: false, hint: "יופיע בקטגוריית התוכן המומלץ"}
+      - {label: "כותרת המאמר", name: "title", widget: "string"}
+      - {label: "כותרת משנה", name: "subtitle", widget: "string", required: false}
+      - {label: "תאריך פרסום", name: "date", widget: "datetime"}
+      - label: "שם הכותב"
+        name: "author"
+        widget: "select"
+        options: ["אלעזר ריגר", "יוחנן דו", "שרה כהן", "דוד לוי"]
+      - {label: "תמונת הכותב", name: "author_image", widget: "image", required: false}
+      - label: "סוג המאמר"
+        name: "category"
+        widget: "select"
+        options: ["עדכונים", "כתבות", "קמפיין", "מאמר שבועי", "דעה"]
+      - {label: "תקציר", name: "excerpt", widget: "text"}
+      - {label: "תמונה ראשית", name: "featured_image", widget: "image"}
+      - {label: "כיתוב לתמונה", name: "image_caption", widget: "string", required: false}
+      - {label: "גלריית תמונות", name: "gallery", widget: "list", field: {label: "תמונה", name: "image", widget: "image"}, required: false}
+      - {label: "תוכן המאמר", name: "body", widget: "markdown"}
+      - {label: "תגיות", name: "tags", widget: "list", required: false}
+      - {label: "מפורסם", name: "published", widget: "boolean", default: true}
+      - {label: "מאמר דחוף", name: "urgent", widget: "boolean", default: false, required: false}
+      - {label: "מאמר מומלץ", name: "featured", widget: "boolean", default: false, required: false}
 
   - name: "quick-posts"
-    label: "⚡ פוסט מהיר"
+    label: "פוסט מהיר"
     label_singular: "פוסט מהיר"
     description: "פוסטים קצרים ומהירים - מושלם לטלפון 📱"
     folder: "posts"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - {label: "📝 כותרת", name: "title", widget: "string", hint: "כותרת קצרה וחדה"}
-      - {label: "💬 תוכן הפוסט", name: "body", widget: "text", hint: "כתוב כאן את הפוסט - יכול להיות קצר"}
-      - {label: "📷 תמונה", name: "featured_image", widget: "image", required: false, hint: "תמונה אחת (אופציונלי)"}
-      - {label: "🏷️ סוג", name: "category", widget: "select", options: ["עדכונים", "דעה"], default: "עדכונים"}
-      - {label: "🚨 דחוף?", name: "urgent", widget: "boolean", default: false, hint: "יופיע באדום"}
-      - {label: "👤 כותב", name: "author", widget: "hidden", default: "אלעזר ריגר"}
-      - {label: "📅 תאריך", name: "date", widget: "hidden", default: "{{now}}"}
-      - {label: "📄 תקציר", name: "excerpt", widget: "hidden", default: "{{title}}"}
-      - {label: "✅ מפורסם", name: "published", widget: "hidden", default: true}
-      - {label: "⭐ מומלץ", name: "featured", widget: "hidden", default: false}
+      - {label: "כותרת", name: "title", widget: "string"}
+      - label: "כותב"
+        name: "author"
+        widget: "select"
+        options: ["אלעזר ריגר", "יוחנן דו", "שרה כהן", "דוד לוי"]
+      - label: "סוג תוכן"
+        name: "category"
+        widget: "select"
+        options: ["עדכונים", "כתבות", "קמפיין", "מאמר שבועי", "דעה"]
+      - {label: "תמונה", name: "featured_image", widget: "image"}
+      - {label: "תוכן", name: "body", widget: "markdown"}
+      - {label: "תאריך", name: "date", widget: "datetime", default: ""}
+      - {label: "מפורסם", name: "published", widget: "boolean", default: true}
 
   - name: "authors"
-    label: "👥 כותבים"
+    label: "כותבים"
     label_singular: "כותב"
     description: "ניהול פרופילי הכותבים"
     folder: "authors"
     create: true
     slug: "{{slug}}"
     fields:
-      - {label: "👤 שם הכותב", name: "name", widget: "string"}
-      - {label: "📷 תמונת פרופיל", name: "image", widget: "image", required: false}
-      - {label: "📝 תיאור קצר", name: "bio", widget: "text", required: false, hint: "כמה מילים על הכותב"}
-      - {label: "📧 אימייל", name: "email", widget: "string", required: false}
+      - {label: "שם הכותב", name: "name", widget: "string"}
+      - {label: "תמונה", name: "image", widget: "image"}
+      - {label: "תיאור קצר", name: "bio", widget: "text"}
+      - {label: "אימייל", name: "email", widget: "string", required: false}
+      - {label: "טוויטר", name: "twitter", widget: "string", required: false}
+      - {label: "לינקדאין", name: "linkedin", widget: "string", required: false}
+      - {label: "פייסבוק", name: "facebook", widget: "string", required: false}
 
   - name: "categories"
     label: "🏷️ קטגוריות"

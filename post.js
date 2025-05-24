@@ -18,7 +18,7 @@ async function loadPost() {
         const article = parseMarkdown(content);
         
         // עדכון כותרת הדף
-        document.title = `${article.frontmatter.title || 'מאמר'} - אתר החדשות המקצועי`;
+        document.title = `${article.frontmatter.title || 'מאמר'} - נלחמים על החיים`;
         document.getElementById('post-title').textContent = article.frontmatter.title || 'מאמר';
         
         // עדכון כותרת המאמר

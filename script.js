@@ -7,11 +7,8 @@ async function loadArticles() {
     const articlesGrid = document.getElementById('articles-grid');
     
     try {
-        // רשימת מאמרים מעודכנת עם כל המאמרים החדשים
+        // רשימת מאמרים מעודכנת - רק המאמרים הקיימים
         const articles = [
-            '2024-01-01-welcome-post.md',
-            '2024-01-02-technology-trends.md',
-            '2024-01-03-breaking-news.md',
             '2025-05-24-welcome-post.md',
             '2025-05-24-tech-news.md',
             '2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md',
