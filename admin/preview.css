@@ -1,0 +1,113 @@
+/* עיצוב לתצוגה מקדימה בממשק הניהול */
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap');
+
+body {
+    font-family: 'Heebo', sans-serif;
+    direction: rtl;
+    background: #1A1A1A;
+    color: #ffffff;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #F4D03F;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+h1 {
+    font-size: 32px;
+    background: linear-gradient(135deg, #F4D03F 0%, #48C9B0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+h2 {
+    font-size: 24px;
+    color: #48C9B0;
+}
+
+p {
+    margin-bottom: 16px;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 16px 0;
+    box-shadow: 0 8px 32px rgba(72, 201, 176, 0.2);
+}
+
+blockquote {
+    border-right: 4px solid #F4D03F;
+    padding: 16px 20px;
+    margin: 20px 0;
+    background: #2D2D2D;
+    border-radius: 8px;
+    font-style: italic;
+}
+
+code {
+    background: #2D2D2D;
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: #48C9B0;
+    font-family: 'Courier New', monospace;
+}
+
+pre {
+    background: #2D2D2D;
+    padding: 20px;
+    border-radius: 12px;
+    overflow-x: auto;
+    border: 2px solid #48C9B0;
+}
+
+a {
+    color: #F4D03F;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #48C9B0;
+}
+
+ul, ol {
+    padding-right: 20px;
+    margin-bottom: 16px;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+.category-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #F4D03F 0%, #48C9B0 100%);
+    color: #1A1A1A;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.author-info {
+    background: #2D2D2D;
+    padding: 16px;
+    border-radius: 12px;
+    border: 2px solid #48C9B0;
+    margin: 20px 0;
+}
+
+.date-info {
+    color: #48C9B0;
+    font-size: 14px;
+    margin-bottom: 16px;
+} 
