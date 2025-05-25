@@ -1,3 +1,5 @@
+console.log('script.js loaded successfully');
+
 // משתנים גלובליים
 let allArticles = [];
 let currentFilter = 'all';
@@ -88,17 +90,21 @@ const preloadedArticles = [
 
 // פונקציה לטעינת מאמרים - מיידית!
 async function loadArticles() {
+    console.log('loadArticles started');
     try {
         // הצגה מיידית של מאמרים מוכנים
         allArticles = [...preloadedArticles];
+        console.log('Articles loaded:', allArticles.length);
         
         // מיון מאמרים לפי תאריך (החדשים ראשונים)
         allArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
         
         // הצגת כל המאמרים ברשת כרטיסים
+        console.log('Calling displayAllArticles');
         displayAllArticles();
         
         // הצגת מאמרים לפי קטגוריות
+        console.log('Calling displayCategorizedArticles');
         displayCategorizedArticles();
         
     } catch (error) {
@@ -110,54 +116,67 @@ async function loadArticles() {
 
 // פונקציה להצגת כל המאמרים ברשת כרטיסים
 function displayAllArticles() {
+    console.log('displayAllArticles started');
     const articlesGrid = document.getElementById('articles-grid');
+    console.log('articlesGrid element:', articlesGrid);
+    
     articlesGrid.innerHTML = '';
     
     if (allArticles.length === 0) {
+        console.log('No articles to display');
         articlesGrid.innerHTML = '<div class="swiper-slide loading">אין מאמרים זמינים</div>';
         return;
     }
     
-    allArticles.forEach(article => {
+    console.log('Creating article cards for', allArticles.length, 'articles');
+    allArticles.forEach((article, index) => {
+        console.log('Creating card for article', index, ':', article.title);
         const articleCard = createArticleCard(article, article.filename);
         articleCard.classList.add('swiper-slide');
         articlesGrid.appendChild(articleCard);
     });
     
+    console.log('All cards created, initializing Swiper');
     // אתחול Swiper
     setTimeout(() => {
-        new Swiper('.articles-swiper', {
-            slidesPerView: 'auto',
-            spaceBetween: 20,
-            centeredSlides: false,
-            loop: false,
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            breakpoints: {
-                320: {
-                    slidesPerView: 1,
-                    spaceBetween: 10
+        console.log('Swiper available:', typeof Swiper);
+        if (typeof Swiper !== 'undefined') {
+            new Swiper('.articles-swiper', {
+                slidesPerView: 'auto',
+                spaceBetween: 20,
+                centeredSlides: false,
+                loop: false,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
                 },
-                640: {
-                    slidesPerView: 2,
-                    spaceBetween: 15
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
                 },
-                768: {
-                    slidesPerView: 3,
-                    spaceBetween: 20
-                },
-                1024: {
-                    slidesPerView: 4,
-                    spaceBetween: 20
+                breakpoints: {
+                    320: {
+                        slidesPerView: 1,
+                        spaceBetween: 10
+                    },
+                    640: {
+                        slidesPerView: 2,
+                        spaceBetween: 15
+                    },
+                    768: {
+                        slidesPerView: 3,
+                        spaceBetween: 20
+                    },
+                    1024: {
+                        slidesPerView: 4,
+                        spaceBetween: 20
+                    }
                 }
-            }
-        });
+            });
+            console.log('Swiper initialized successfully');
+        } else {
+            console.error('Swiper is not available');
+        }
     }, 100);
 }
 
