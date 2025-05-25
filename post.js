@@ -1,3 +1,5 @@
+console.log('post.js loaded successfully');
+
 // מאמרים מוכנים מראש לטעינה מיידית
 const preloadedArticles = [
     {
@@ -85,9 +87,13 @@ const preloadedArticles = [
 // פונקציה לטעינת מאמר בודד
 async function loadPost() {
     console.log('loadPost started');
+    console.log('Current URL:', window.location.href);
+    console.log('Search params:', window.location.search);
+    
     const urlParams = new URLSearchParams(window.location.search);
     const postFile = urlParams.get('post');
     console.log('postFile:', postFile);
+    console.log('All URL params:', Array.from(urlParams.entries()));
     
     if (!postFile) {
         console.log('No post file specified');
@@ -592,6 +598,7 @@ function showError(message) {
 
 // אירועי DOM
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOMContentLoaded event fired');
     loadPost();
     
     // הוספת אירוע לטופס התגובות
