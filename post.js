@@ -504,6 +504,11 @@ function parseMarkdown(content) {
             const key = line.substring(0, colonIndex).trim();
             let value = line.substring(colonIndex + 1).trim();
             
+            // וידוא שהמשתנה value הוא string
+            if (typeof value !== 'string') {
+                value = String(value);
+            }
+            
             // הסרת גרשיים
             if (value.startsWith('"') && value.endsWith('"')) {
                 value = value.slice(1, -1);
