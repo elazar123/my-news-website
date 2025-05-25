@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- דף הבית -->
+    <url>
+        <loc>https://merry-heliotrope-83b40f.netlify.app/</loc>
+        <lastmod>2025-05-24</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+    
+    <!-- מאמרים -->
+    <url>
+        <loc>https://merry-heliotrope-83b40f.netlify.app/post.html?post=2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md</loc>
+        <lastmod>2025-05-24</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://merry-heliotrope-83b40f.netlify.app/post.html?post=2025-05-24-gideon-warriors.md</loc>
+        <lastmod>2025-05-24</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://merry-heliotrope-83b40f.netlify.app/post.html?post=2025-05-24-מאמר-דעה.md</loc>
+        <lastmod>2025-05-24</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://merry-heliotrope-83b40f.netlify.app/post.html?post=2025-05-24-כתבה-שנייה.md</loc>
+        <lastmod>2025-05-24</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://merry-heliotrope-83b40f.netlify.app/post.html?post=2025-05-24-בדיקה-ראשונה.md</loc>
+        <lastmod>2025-05-24</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://merry-heliotrope-83b40f.netlify.app/post.html?post=2025-05-24-אני-רוצה-לבדוק-אם-זה-עובד.md</loc>
+        <lastmod>2025-05-24</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://merry-heliotrope-83b40f.netlify.app/post.html?post=2025-05-24-עדכון.md</loc>
+        <lastmod>2025-05-24</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://merry-heliotrope-83b40f.netlify.app/post.html?post=2025-05-24-בדיקה.md</loc>
+        <lastmod>2025-05-24</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+</urlset> 

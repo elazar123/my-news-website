@@ -1,0 +1,32 @@
+User-agent: *
+Allow: /
+
+# Allow all search engines to crawl the site
+Allow: /posts/
+Allow: /assets/
+Allow: /styles.css
+Allow: /script.js
+Allow: /post.js
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /.netlify/
+
+# Sitemap location
+Sitemap: https://merry-heliotrope-83b40f.netlify.app/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1
+
+# Specific rules for different bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: / 

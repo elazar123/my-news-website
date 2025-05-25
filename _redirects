@@ -1,0 +1,8 @@
+# Netlify redirects file
+# Handle Hebrew URLs properly
+/robots.txt /robots.txt 200
+/sitemap.xml /sitemap.xml 200
+/site.webmanifest /site.webmanifest 200
+
+# Handle 404s
+/* /index.html 200 

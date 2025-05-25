@@ -3,9 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="נלחמים על החיים - אתר החדשות המקצועי עם תוכן איכותי ומקצועי. מאמרים, כתבות, דעות ועדכונים חמים מהשטח">
+    <meta name="keywords" content="חדשות, מאמרים, דעות, כתבות, עדכונים, נלחמים על החיים, ישראל, חדשות ישראל, עיתונות">
+    <meta name="author" content="נלחמים על החיים">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Hebrew">
+    <meta name="revisit-after" content="1 days">
+    <meta name="distribution" content="global">
+    <meta name="rating" content="general">
+    
+    <!-- Open Graph Meta Tags (Facebook, LinkedIn) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="נלחמים על החיים - אתר החדשות המקצועי">
+    <meta property="og:description" content="אתר החדשות המקצועי עם תוכן איכותי ומקצועי. מאמרים, כתבות, דעות ועדכונים חמים מהשטח">
+    <meta property="og:url" content="https://merry-heliotrope-83b40f.netlify.app">
+    <meta property="og:site_name" content="נלחמים על החיים">
+    <meta property="og:image" content="https://merry-heliotrope-83b40f.netlify.app/assets/images/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="נלחמים על החיים - אתר החדשות המקצועי">
+    <meta property="og:locale" content="he_IL">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="נלחמים על החיים - אתר החדשות המקצועי">
+    <meta name="twitter:description" content="אתר החדשות המקצועי עם תוכן איכותי ומקצועי. מאמרים, כתבות, דעות ועדכונים חמים מהשטח">
+    <meta name="twitter:image" content="https://merry-heliotrope-83b40f.netlify.app/assets/images/twitter-card.jpg">
+    <meta name="twitter:image:alt" content="נלחמים על החיים - אתר החדשות המקצועי">
+    <meta name="twitter:site" content="@nlchmim_al_hchyim">
+    <meta name="twitter:creator" content="@nlchmim_al_hchyim">
+    
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#F4D03F">
+    <meta name="msapplication-TileColor" content="#F4D03F">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="נלחמים על החיים">
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "NewsMediaOrganization",
+        "name": "נלחמים על החיים",
+        "url": "https://merry-heliotrope-83b40f.netlify.app",
+        "logo": "https://merry-heliotrope-83b40f.netlify.app/logo.png",
+        "description": "אתר החדשות המקצועי עם תוכן איכותי ומקצועי",
+        "sameAs": [
+            "https://facebook.com/nlchmim_al_hchyim",
+            "https://twitter.com/nlchmim_al_hchyim",
+            "https://instagram.com/nlchmim_al_hchyim"
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+972-3-1234567",
+            "contactType": "customer service",
+            "email": "info@nlchmim-al-hchyim.com"
+        },
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "IL",
+            "addressLocality": "תל אביב"
+        }
+    }
+    </script>
+    
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📰</text></svg>">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
     <title>נלחמים על החיים - אתר החדשות המקצועי</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
@@ -18,28 +94,29 @@
                 </a>
             </div>
             <nav class="nav">
-                <a href="index.html" class="nav-link">כל התוכן</a>
-                <div class="nav-dropdown">
-                    <a href="#" class="nav-link dropdown-toggle">כותבים ▼</a>
-                    <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item" data-filter="author" data-value="אלעזר ריגר">אלעזר ריגר</a>
-                        <a href="#" class="dropdown-item" data-filter="author" data-value="יוחנן דו">יוחנן דו</a>
-                        <a href="#" class="dropdown-item" data-filter="author" data-value="שרה כהן">שרה כהן</a>
-                        <a href="#" class="dropdown-item" data-filter="author" data-value="דוד לוי">דוד לוי</a>
-                    </div>
-                </div>
-                <div class="nav-dropdown">
-                    <a href="#" class="nav-link dropdown-toggle">סוגי תוכן ▼</a>
-                    <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item" data-filter="category" data-value="עדכונים">עדכונים</a>
-                        <a href="#" class="dropdown-item" data-filter="category" data-value="כתבות">כתבות</a>
-                        <a href="#" class="dropdown-item" data-filter="category" data-value="קמפיין">קמפיין</a>
-                        <a href="#" class="dropdown-item" data-filter="category" data-value="מאמר שבועי">מאמר שבועי</a>
-                        <a href="#" class="dropdown-item" data-filter="category" data-value="דעה">דעה</a>
-                    </div>
-                </div>
-                <a href="/admin" class="nav-link admin-link">ניהול תוכן</a>
+                <ul class="nav-list">
+                    <li><a href="#home" class="nav-link">בית</a></li>
+                    <li><a href="#articles" class="nav-link">מאמרים</a></li>
+                    <li><a href="#about" class="nav-link">אודות</a></li>
+                    <li><a href="#contact" class="nav-link">צור קשר</a></li>
+                </ul>
             </nav>
+            
+            <!-- מערכת חיפוש מתקדמת -->
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="חפש מאמרים..." class="search-input">
+                    <button class="search-btn" onclick="performSearch()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div id="searchResults" class="search-results"></div>
+            </div>
+            
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
         </div>
     </header>
 
@@ -62,13 +139,18 @@
                 <div id="featured-articles" class="featured-grid"></div>
             </section>
 
-            <!-- כל התוכן - רשת כרטיסים -->
+            <!-- כל התוכן - קרוסל מהיר -->
             <section class="articles-section">
                 <div class="section-header">
                     <h3 class="section-title">כל התוכן</h3>
                 </div>
-                <div id="articles-grid" class="articles-grid">
-                    <div class="loading">טוען תוכן...</div>
+                <div class="swiper articles-swiper">
+                    <div class="swiper-wrapper" id="articles-grid">
+                        <div class="swiper-slide loading">טוען תוכן...</div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
                 </div>
             </section>
 
@@ -127,6 +209,9 @@
         </div>
     </main>
 
+    <!-- מערכת הודעות טוסט -->
+    <div id="toast-container" class="toast-container"></div>
+
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -164,6 +249,7 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="script.js"></script>
     <script>
         if (window.netlifyIdentity) {

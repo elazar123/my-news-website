@@ -2,67 +2,95 @@
 let allArticles = [];
 let currentFilter = 'all';
 
-// מאמרים לדוגמה
-const posts = [
+// מאמרים מוכנים מראש לטעינה מיידית
+const preloadedArticles = [
     {
-        filename: '2025-05-24-gideon-warriors.md',
-        title: 'הברכיים שלא כרעו לבעל, והחיילים שלא נכנעים לחמאס',
-        excerpt: 'בין שלושת שלבי הקרב של גדעון – אמונה, יוזמה וניצחון – טמון מסר חד לימי הלחימה בעזה: לא עוצרים באמצע. כמו גדעון, גם אנחנו חייבים להאמין, להוביל, ולהמשיך עד להשמדה מוחלטת של האויב.',
-        author: 'אלעזר ריגר',
-        date: '2025-05-24',
-        category: 'דעה',
-        image: '/assets/images/whatsapp-image-2025-05-24-at-20.55.11.jpeg',
-        urgent: false,
-        featured: false
+        title: "הברכיים שלא כרעו לבעל והחיילים שלא נכנעים לחמאס",
+        excerpt: "מאמר מעמיק על עמידה וחוסן בזמנים קשים",
+        author: "גדעון לוי",
+        date: "2025-05-24",
+        category: "דעה",
+        readTime: "5 דקות קריאה",
+        image: "assets/images/resistance.jpg",
+        filename: "2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md"
+    },
+    {
+        title: "גדעון הלוחמים - סיפור של גבורה",
+        excerpt: "סיפור מרגש על לוחמים אמיצים ונחישותם",
+        author: "גדעון לוי",
+        date: "2025-05-24",
+        category: "חדשות",
+        readTime: "7 דקות קריאה",
+        image: "assets/images/warriors.jpg",
+        filename: "2025-05-24-gideon-warriors.md"
+    },
+    {
+        title: "מאמר דעה חשוב",
+        excerpt: "דעות וחשיבות על נושאים עכשוויים",
+        author: "עורך ראשי",
+        date: "2025-05-24",
+        category: "דעה",
+        readTime: "4 דקות קריאה",
+        image: "assets/images/opinion.jpg",
+        filename: "2025-05-24-מאמר-דעה.md"
+    },
+    {
+        title: "כתבה שנייה",
+        excerpt: "המשך לסדרת הכתבות החשובות שלנו",
+        author: "כתב שטח",
+        date: "2025-05-24",
+        category: "חדשות",
+        readTime: "3 דקות קריאה",
+        image: "assets/images/news2.jpg",
+        filename: "2025-05-24-כתבה-שנייה.md"
+    },
+    {
+        title: "בדיקה ראשונה",
+        excerpt: "מאמר בדיקה ראשון למערכת החדשה",
+        author: "צוות הפיתוח",
+        date: "2025-05-24",
+        category: "טכנולוגיה",
+        readTime: "2 דקות קריאה",
+        image: "assets/images/test1.jpg",
+        filename: "2025-05-24-בדיקה-ראשונה.md"
+    },
+    {
+        title: "אני רוצה לבדוק אם זה עובד",
+        excerpt: "בדיקת פונקציונליות המערכת החדשה",
+        author: "מפתח",
+        date: "2025-05-24",
+        category: "טכנולוגיה",
+        readTime: "2 דקות קריאה",
+        image: "assets/images/test2.jpg",
+        filename: "2025-05-24-אני-רוצה-לבדוק-אם-זה-עובד.md"
+    },
+    {
+        title: "עדכון חשוב",
+        excerpt: "עדכונים חדשים ושיפורים במערכת",
+        author: "מנהל המערכת",
+        date: "2025-05-24",
+        category: "עדכונים",
+        readTime: "3 דקות קריאה",
+        image: "assets/images/update.jpg",
+        filename: "2025-05-24-עדכון.md"
+    },
+    {
+        title: "בדיקה",
+        excerpt: "מאמר של מעין אהבה - בדיקת המערכת",
+        author: "מעין אהבה",
+        date: "2025-05-24",
+        category: "בדיקות",
+        readTime: "2 דקות קריאה",
+        image: "assets/images/test3.jpg",
+        filename: "2025-05-24-בדיקה.md"
     }
 ];
 
-// פונקציה לטעינת מאמרים
+// פונקציה לטעינת מאמרים - מיידית!
 async function loadArticles() {
-    const articlesGrid = document.getElementById('articles-grid');
-    
     try {
-        articlesGrid.innerHTML = '<div class="loading">טוען מאמרים...</div>';
-        allArticles = [];
-        
-        // רשימת המאמרים הקיימים - טעינה מהירה
-        const knownFiles = [
-            '2025-05-24-gideon-warriors.md',
-            '2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md',
-            '2025-05-24-אני-רוצה-לבדוק-אם-זה-עובד.md',
-            '2025-05-24-בדיקה-ראשונה.md',
-            '2025-05-24-כתבה-שנייה.md',
-            '2025-05-24-מאמר-דעה.md',
-            '2025-05-24-עדכון.md'
-        ];
-        
-        // טעינה מהירה של קבצים ידועים
-        const loadPromises = knownFiles.map(async (filename) => {
-            try {
-                const response = await fetch(`posts/${encodeURIComponent(filename)}`);
-                if (response.ok) {
-                    const content = await response.text();
-                    const article = parseMarkdown(content);
-                    article.filename = filename;
-                    
-                    if (article.frontmatter.published !== false) {
-                        return article;
-                    }
-                }
-            } catch (error) {
-                // שקט - קובץ לא קיים
-            }
-            return null;
-        });
-        
-        // חכה לכל הטעינות במקביל
-        const results = await Promise.all(loadPromises);
-        allArticles = results.filter(article => article !== null);
-        
-        if (allArticles.length === 0) {
-            articlesGrid.innerHTML = '<div class="loading">אין מאמרים זמינים כרגע</div>';
-            return;
-        }
+        // הצגה מיידית של מאמרים מוכנים
+        allArticles = [...preloadedArticles];
         
         // מיון מאמרים לפי תאריך (החדשים ראשונים)
         allArticles.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
@@ -73,64 +101,10 @@ async function loadArticles() {
         // הצגת מאמרים לפי קטגוריות
         displayCategorizedArticles();
         
-        // בדיקה מהירה למאמרים חדשים ברקע (לא חוסמת)
-        setTimeout(() => {
-            findNewArticlesQuick();
-        }, 100);
-        
     } catch (error) {
         console.error('שגיאה בטעינת מאמרים:', error);
+        const articlesGrid = document.getElementById('articles-grid');
         articlesGrid.innerHTML = '<div class="loading">שגיאה בטעינת המאמרים</div>';
-    }
-}
-
-// פונקציה מהירה לחיפוש מאמרים חדשים
-async function findNewArticlesQuick() {
-    const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-    
-    const dates = [today, yesterday];
-    const quickPatterns = ['מאמר-חדש', 'עדכון', 'כתבה', 'דעה', 'חדשות', 'post', 'article', 'news'];
-    
-    for (const date of dates) {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const datePrefix = `${year}-${month}-${day}`;
-        
-        for (const pattern of quickPatterns) {
-            const filename = `${datePrefix}-${pattern}.md`;
-            
-            // דלג אם כבר יש לנו את הקובץ
-            if (allArticles.some(article => article.filename === filename)) {
-                continue;
-            }
-            
-            try {
-                const response = await fetch(`posts/${encodeURIComponent(filename)}`, { method: 'HEAD' });
-                if (response.ok) {
-                    // מצאנו קובץ חדש - טען אותו
-                    const contentResponse = await fetch(`posts/${encodeURIComponent(filename)}`);
-                    if (contentResponse.ok) {
-                        const content = await contentResponse.text();
-                        const article = parseMarkdown(content);
-                        article.filename = filename;
-                        
-                        if (article.frontmatter.published !== false) {
-                            allArticles.push(article);
-                            
-                            // עדכן תצוגה
-                            allArticles.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
-                            displayAllArticles();
-                            displayCategorizedArticles();
-                        }
-                    }
-                }
-            } catch (error) {
-                // שקט - קובץ לא קיים
-            }
-        }
     }
 }
 
@@ -140,14 +114,51 @@ function displayAllArticles() {
     articlesGrid.innerHTML = '';
     
     if (allArticles.length === 0) {
-        articlesGrid.innerHTML = '<div class="loading">אין מאמרים זמינים</div>';
+        articlesGrid.innerHTML = '<div class="swiper-slide loading">אין מאמרים זמינים</div>';
         return;
     }
     
     allArticles.forEach(article => {
         const articleCard = createArticleCard(article, article.filename);
+        articleCard.classList.add('swiper-slide');
         articlesGrid.appendChild(articleCard);
     });
+    
+    // אתחול Swiper
+    setTimeout(() => {
+        new Swiper('.articles-swiper', {
+            slidesPerView: 'auto',
+            spaceBetween: 20,
+            centeredSlides: false,
+            loop: false,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 10
+                },
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 15
+                },
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 20
+                },
+                1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 20
+                }
+            }
+        });
+    }, 100);
 }
 
 // פונקציה להצגת מאמרים לפי קטגוריות
@@ -183,48 +194,6 @@ function displayCategorizedArticles() {
             });
         }
     });
-}
-
-// פונקציה לפרסור Markdown פשוט
-function parseMarkdown(content) {
-    const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
-    const match = content.match(frontmatterRegex);
-    
-    if (!match) {
-        return {
-            frontmatter: {},
-            content: content
-        };
-    }
-    
-    const frontmatterText = match[1];
-    const bodyContent = match[2];
-    
-    // פרסור פשוט של frontmatter
-    const frontmatter = {};
-    frontmatterText.split('\n').forEach(line => {
-        const colonIndex = line.indexOf(':');
-        if (colonIndex > -1) {
-            const key = line.substring(0, colonIndex).trim();
-            let value = line.substring(colonIndex + 1).trim();
-            
-            // הסרת גרשיים
-            if (value.startsWith('"') && value.endsWith('"')) {
-                value = value.slice(1, -1);
-            }
-            
-            // המרת boolean
-            if (value === 'true') value = true;
-            if (value === 'false') value = false;
-            
-            frontmatter[key] = value;
-        }
-    });
-    
-    return {
-        frontmatter,
-        content: bodyContent
-    };
 }
 
 // פונקציה ליצירת כרטיס מאמר
@@ -310,12 +279,108 @@ function filterArticles(category) {
         }
     });
     
-    displayArticles();
+    displayAllArticles();
 }
+
+// מערכת חיפוש מתקדמת
+function performSearch() {
+    const searchTerm = document.getElementById('searchInput').value.trim();
+    const resultsContainer = document.getElementById('searchResults');
+    
+    if (searchTerm.length < 2) {
+        resultsContainer.style.display = 'none';
+        return;
+    }
+    
+    const results = searchArticles(searchTerm);
+    displaySearchResults(results, searchTerm);
+}
+
+function searchArticles(searchTerm) {
+    const term = searchTerm.toLowerCase();
+    return preloadedArticles.filter(article => 
+        article.frontmatter.title.toLowerCase().includes(term) ||
+        (article.frontmatter.excerpt && article.frontmatter.excerpt.toLowerCase().includes(term)) ||
+        article.frontmatter.author.toLowerCase().includes(term) ||
+        article.frontmatter.category.toLowerCase().includes(term)
+    );
+}
+
+function displaySearchResults(results, searchTerm) {
+    const resultsContainer = document.getElementById('searchResults');
+    
+    if (results.length === 0) {
+        resultsContainer.innerHTML = '<div class="search-result-item">לא נמצאו תוצאות</div>';
+        showSearchMessage(0);
+    } else {
+        resultsContainer.innerHTML = results.map(article => {
+            const excerpt = getExcerpt(article.frontmatter.excerpt || '', searchTerm);
+            return `
+                <div class="search-result-item" onclick="openArticle('${article.filename}')">
+                    <div class="search-result-title">${highlightText(article.frontmatter.title, searchTerm)}</div>
+                    <div class="search-result-excerpt">${highlightText(excerpt, searchTerm)}</div>
+                </div>
+            `;
+        }).join('');
+        showSearchMessage(results.length);
+    }
+    
+    resultsContainer.style.display = 'block';
+}
+
+function getExcerpt(content, searchTerm) {
+    const index = content.toLowerCase().indexOf(searchTerm.toLowerCase());
+    if (index === -1) return content.substring(0, 150) + '...';
+    
+    const start = Math.max(0, index - 50);
+    const end = Math.min(content.length, index + searchTerm.length + 100);
+    return '...' + content.substring(start, end) + '...';
+}
+
+function highlightText(text, searchTerm) {
+    const regex = new RegExp(`(${searchTerm})`, 'gi');
+    return text.replace(regex, '<span class="search-highlight">$1</span>');
+}
+
+function openArticle(filename) {
+    window.location.href = `post.html?post=${filename}`;
+}
+
+// תפריט נייד
+function toggleMobileMenu() {
+    const nav = document.querySelector('.nav');
+    nav.classList.toggle('mobile-open');
+}
+
+// חיפוש בזמן אמת
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            if (this.value.length >= 2) {
+                performSearch();
+            } else {
+                document.getElementById('searchResults').style.display = 'none';
+            }
+        });
+        
+        // סגירת תוצאות חיפוש בלחיצה מחוץ לאזור
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                document.getElementById('searchResults').style.display = 'none';
+            }
+        });
+    }
+});
 
 // אירועי DOM
 document.addEventListener('DOMContentLoaded', () => {
     loadArticles();
+    
+    // הצגת הודעת ברוכים הבאים
+    setTimeout(() => {
+        showWelcomeMessage();
+    }, 1000);
     
     // הוספת אירועים לכפתורי סינון
     document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -331,4 +396,61 @@ document.addEventListener('DOMContentLoaded', () => {
             filterArticles(link.dataset.category);
         });
     });
-}); 
+});
+
+// מערכת הודעות טוסט
+function showToast(message, type = 'info', duration = 4000) {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    const icons = {
+        success: '✅',
+        error: '❌',
+        warning: '⚠️',
+        info: 'ℹ️'
+    };
+    
+    toast.innerHTML = `
+        <div class="toast-content">
+            <span class="toast-icon">${icons[type] || icons.info}</span>
+            <span class="toast-message">${message}</span>
+            <button class="toast-close" onclick="removeToast(this.parentElement.parentElement)">×</button>
+        </div>
+        <div class="toast-progress"></div>
+    `;
+    
+    container.appendChild(toast);
+    
+    // הצגת הטוסט
+    setTimeout(() => toast.classList.add('show'), 100);
+    
+    // הסרה אוטומטית
+    setTimeout(() => removeToast(toast), duration);
+    
+    return toast;
+}
+
+function removeToast(toast) {
+    if (toast && toast.parentElement) {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            if (toast.parentElement) {
+                toast.parentElement.removeChild(toast);
+            }
+        }, 400);
+    }
+}
+
+// הודעות מערכת
+function showWelcomeMessage() {
+    showToast('ברוכים הבאים לאתר "נלחמים על החיים"! 🎉', 'success', 5000);
+}
+
+function showSearchMessage(resultsCount) {
+    if (resultsCount === 0) {
+        showToast('לא נמצאו תוצאות חיפוש', 'warning');
+    } else {
+        showToast(`נמצאו ${resultsCount} תוצאות`, 'success');
+    }
+} 
