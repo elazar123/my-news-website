@@ -435,27 +435,52 @@ function displayComments(comments) {
 }
 
 // פונקציה לטיפול בשליחת תגובה
-function handleCommentSubmit(event) {
+async function handleCommentSubmit(event) {
     event.preventDefault();
     
     const form = event.target;
     const formData = new FormData(form);
     
+    const urlParams = new URLSearchParams(window.location.search);
+    const postFile = urlParams.get('post');
+    
     const comment = {
+        id: Date.now().toString(), // ID ייחודי
         name: formData.get('name'),
         email: formData.get('email'),
         content: formData.get('content'),
-        date: new Date().toISOString()
+        post: postFile,
+        postTitle: document.getElementById('article-title').textContent,
+        date: new Date().toISOString(),
+        status: 'pending' // סטטוס ממתין לאישור
     };
     
-    // בפרויקט אמיתי, כאן נשלח את התגובה לשרת
-    console.log('תגובה חדשה:', comment);
-    
-    // הצגת הודעת הצלחה
-    showSuccessMessage('התגובה נשלחה בהצלחה! תופיע לאחר אישור.');
-    
-    // איפוס הטופס
-    form.reset();
+    try {
+        // שמירת התגובה (בפרויקט אמיתי זה יישלח לשרת)
+        console.log('תגובה חדשה נשלחה:', comment);
+        
+        // סימולציה של שמירה - בפרויקט אמיתי נשלח לשרת
+        // await fetch('/api/comments', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify(comment)
+        // });
+        
+        // הצגת הודעת הצלחה
+        showSuccessMessage('תגובתך נשלחה בהצלחה! היא תופיע לאחר אישור המנהל.');
+        
+        // איפוס הטופס
+        form.reset();
+        
+        // הוספת התגובה לאחסון מקומי זמני (לצורך הדגמה)
+        const pendingComments = JSON.parse(localStorage.getItem('pendingComments') || '[]');
+        pendingComments.push(comment);
+        localStorage.setItem('pendingComments', JSON.stringify(pendingComments));
+        
+    } catch (error) {
+        console.error('שגיאה בשליחת התגובה:', error);
+        showErrorMessage('שגיאה בשליחת התגובה. אנא נסה שוב.');
+    }
 }
 
 // פונקציה להצגת הודעת הצלחה
@@ -477,6 +502,29 @@ function showSuccessMessage(message) {
     setTimeout(() => {
         if (successDiv.parentNode) {
             successDiv.parentNode.removeChild(successDiv);
+        }
+    }, 5000);
+}
+
+// פונקציה להצגת הודעת שגיאה
+function showErrorMessage(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.style.cssText = `
+        background: #f8d7da;
+        color: #721c24;
+        padding: 1rem;
+        border-radius: 5px;
+        margin: 1rem 0;
+        border: 1px solid #f5c6cb;
+    `;
+    errorDiv.textContent = message;
+    
+    const form = document.getElementById('comment-form');
+    form.appendChild(errorDiv);
+    
+    setTimeout(() => {
+        if (errorDiv.parentNode) {
+            errorDiv.parentNode.removeChild(errorDiv);
         }
     }, 5000);
 }
@@ -876,4 +924,4 @@ function handleSwipe() {
             window.moveCarousel(-1);
         }
     }
-} 
+}
