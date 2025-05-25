@@ -13,7 +13,7 @@ const preloadedArticles = [
         date: "2025-05-24",
         category: "דעה",
         readTime: "5 דקות קריאה",
-        image: "assets/images/resistance.jpg",
+        image: "https://via.placeholder.com/400x250/667eea/ffffff?text=מאמר+דעה",
         filename: "2025-05-24-gideon-warriors.md"
     },
     {
@@ -23,7 +23,7 @@ const preloadedArticles = [
         date: "2025-05-24",
         category: "דעה",
         readTime: "5 דקות קריאה",
-        image: "assets/images/resistance.jpg",
+        image: "https://via.placeholder.com/400x250/28a745/ffffff?text=עמידה+וחוסן",
         filename: "2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md"
     },
     {
@@ -33,7 +33,7 @@ const preloadedArticles = [
         date: "2025-05-24",
         category: "טכנולוגיה",
         readTime: "2 דקות קריאה",
-        image: "assets/images/test2.jpg",
+        image: "https://via.placeholder.com/400x250/007bff/ffffff?text=בדיקת+מערכת",
         filename: "2025-05-24-אני-רוצה-לבדוק-אם-זה-עובד.md"
     },
     {
@@ -43,7 +43,7 @@ const preloadedArticles = [
         date: "2025-05-24",
         category: "טכנולוגיה",
         readTime: "2 דקות קריאה",
-        image: "assets/images/test1.jpg",
+        image: "https://via.placeholder.com/400x250/6c757d/ffffff?text=בדיקה+ראשונה",
         filename: "2025-05-24-בדיקה-ראשונה.md"
     },
     {
@@ -53,7 +53,7 @@ const preloadedArticles = [
         date: "2025-05-24",
         category: "חדשות",
         readTime: "3 דקות קריאה",
-        image: "assets/images/news2.jpg",
+        image: "https://via.placeholder.com/400x250/dc3545/ffffff?text=חדשות+חמות",
         filename: "2025-05-24-כתבה-שנייה.md"
     },
     {
@@ -63,7 +63,7 @@ const preloadedArticles = [
         date: "2025-05-24",
         category: "דעה",
         readTime: "4 דקות קריאה",
-        image: "assets/images/opinion.jpg",
+        image: "https://via.placeholder.com/400x250/ffc107/000000?text=דעה+חשובה",
         filename: "2025-05-24-מאמר-דעה.md"
     },
     {
@@ -73,7 +73,7 @@ const preloadedArticles = [
         date: "2025-05-24",
         category: "עדכונים",
         readTime: "3 דקות קריאה",
-        image: "assets/images/update.jpg",
+        image: "https://via.placeholder.com/400x250/17a2b8/ffffff?text=עדכון+חשוב",
         filename: "2025-05-24-עדכון.md"
     },
     {
@@ -83,7 +83,7 @@ const preloadedArticles = [
         date: "2025-05-24",
         category: "בדיקות",
         readTime: "2 דקות קריאה",
-        image: "assets/images/test3.jpg",
+        image: "https://via.placeholder.com/400x250/e83e8c/ffffff?text=בדיקת+מערכת",
         filename: "2025-05-24-בדיקה.md"
     }
 ];
