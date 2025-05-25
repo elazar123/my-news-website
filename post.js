@@ -510,7 +510,7 @@ function parseMarkdown(content) {
             }
             
             // הסרת גרשיים
-            if (value.startsWith('"') && value.endsWith('"')) {
+            if (typeof value === 'string' && value.startsWith('"') && value.endsWith('"')) {
                 value = value.slice(1, -1);
             }
             
@@ -519,7 +519,7 @@ function parseMarkdown(content) {
             if (value === 'false') value = false;
             
             // טיפול ברשימות (למשל gallery)
-            if (value.startsWith('[') && value.endsWith(']')) {
+            if (typeof value === 'string' && value.startsWith('[') && value.endsWith(']')) {
                 try {
                     value = JSON.parse(value);
                 } catch (e) {
