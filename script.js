@@ -93,7 +93,7 @@ async function loadArticles() {
         allArticles = [...preloadedArticles];
         
         // מיון מאמרים לפי תאריך (החדשים ראשונים)
-        allArticles.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
+        allArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
         
         // הצגת כל המאמרים ברשת כרטיסים
         displayAllArticles();
@@ -176,7 +176,7 @@ function displayCategorizedArticles() {
         if (!grid) return;
         
         const categoryArticles = allArticles.filter(article => 
-            article.frontmatter.category === category.name
+            article.category === category.name
         );
         
         grid.innerHTML = '';
@@ -201,21 +201,17 @@ function createArticleCard(article, filename, isSmall = false) {
     const card = document.createElement('div');
     card.className = 'article-card';
     
-    const title = article.frontmatter.title || 'ללא כותרת';
-    const subtitle = article.frontmatter.subtitle || '';
-    const excerpt = article.frontmatter.excerpt || 'ללא תקציר';
-    const date = article.frontmatter.date ? formatDate(article.frontmatter.date) : '';
-    const category = article.frontmatter.category || 'כללי';
-    const author = article.frontmatter.author || 'כותב אלמוני';
-    const imageUrl = article.frontmatter.featured_image || '';
+    const title = article.title || 'ללא כותרת';
+    const excerpt = article.excerpt || 'ללא תקציר';
+    const date = article.date ? formatDate(article.date) : '';
+    const category = article.category || 'כללי';
+    const author = article.author || 'כותב אלמוני';
+    const imageUrl = article.image || '';
     
     // קביעת סוג הקטגוריה
     let categoryClass = `category-${category.replace(/\s+/g, '-')}`;
-    if (article.frontmatter.urgent) categoryClass += ' urgent-badge';
-    if (article.frontmatter.featured) categoryClass += ' featured-badge';
     
     // גודל כרטיס קטן יותר לקטגוריות
-    const cardStyle = isSmall ? 'style="max-height: 350px;"' : '';
     const excerptText = isSmall ? excerpt.substring(0, 80) + '...' : excerpt;
     
     card.innerHTML = `
@@ -223,7 +219,6 @@ function createArticleCard(article, filename, isSmall = false) {
         <div class="article-content">
             <span class="article-category ${categoryClass}">${category}</span>
             <h3 class="article-title" style="${isSmall ? 'font-size: 1.1rem; line-height: 1.3;' : ''}">${title}</h3>
-            ${subtitle && !isSmall ? `<p class="article-subtitle" style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 0.5rem;">${subtitle}</p>` : ''}
             <p class="article-excerpt" style="${isSmall ? 'font-size: 0.85rem; line-height: 1.4;' : ''}">${excerptText}</p>
             <div class="article-meta">
                 <div class="article-author">
@@ -299,10 +294,10 @@ function performSearch() {
 function searchArticles(searchTerm) {
     const term = searchTerm.toLowerCase();
     return preloadedArticles.filter(article => 
-        article.frontmatter.title.toLowerCase().includes(term) ||
-        (article.frontmatter.excerpt && article.frontmatter.excerpt.toLowerCase().includes(term)) ||
-        article.frontmatter.author.toLowerCase().includes(term) ||
-        article.frontmatter.category.toLowerCase().includes(term)
+        article.title.toLowerCase().includes(term) ||
+        (article.excerpt && article.excerpt.toLowerCase().includes(term)) ||
+        article.author.toLowerCase().includes(term) ||
+        article.category.toLowerCase().includes(term)
     );
 }
 
@@ -314,10 +309,10 @@ function displaySearchResults(results, searchTerm) {
         showSearchMessage(0);
     } else {
         resultsContainer.innerHTML = results.map(article => {
-            const excerpt = getExcerpt(article.frontmatter.excerpt || '', searchTerm);
+            const excerpt = getExcerpt(article.excerpt || '', searchTerm);
             return `
                 <div class="search-result-item" onclick="openArticle('${article.filename}')">
-                    <div class="search-result-title">${highlightText(article.frontmatter.title, searchTerm)}</div>
+                    <div class="search-result-title">${highlightText(article.title, searchTerm)}</div>
                     <div class="search-result-excerpt">${highlightText(excerpt, searchTerm)}</div>
                 </div>
             `;
