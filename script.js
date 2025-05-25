@@ -5,6 +5,16 @@ let currentFilter = 'all';
 // מאמרים מוכנים מראש לטעינה מיידית
 const preloadedArticles = [
     {
+        title: "הברכיים שלא כרעו לבעל, והחיילים שלא נכנעים לחמאס",
+        excerpt: "בין שלושת שלבי הקרב של גדעון – אמונה, יוזמה וניצחון – טמון מסר חד לימי הלחימה בעזה: לא עוצרים באמצע.",
+        author: "אלעזר ריגר",
+        date: "2025-05-24",
+        category: "דעה",
+        readTime: "5 דקות קריאה",
+        image: "assets/images/resistance.jpg",
+        filename: "2025-05-24-gideon-warriors.md"
+    },
+    {
         title: "הברכיים שלא כרעו לבעל והחיילים שלא נכנעים לחמאס",
         excerpt: "מאמר מעמיק על עמידה וחוסן בזמנים קשים",
         author: "גדעון לוי",
@@ -15,34 +25,14 @@ const preloadedArticles = [
         filename: "2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md"
     },
     {
-        title: "גדעון הלוחמים - סיפור של גבורה",
-        excerpt: "סיפור מרגש על לוחמים אמיצים ונחישותם",
-        author: "גדעון לוי",
+        title: "אני רוצה לבדוק אם זה עובד",
+        excerpt: "בדיקת פונקציונליות המערכת החדשה",
+        author: "מפתח",
         date: "2025-05-24",
-        category: "חדשות",
-        readTime: "7 דקות קריאה",
-        image: "assets/images/warriors.jpg",
-        filename: "2025-05-24-gideon-warriors.md"
-    },
-    {
-        title: "מאמר דעה חשוב",
-        excerpt: "דעות וחשיבות על נושאים עכשוויים",
-        author: "עורך ראשי",
-        date: "2025-05-24",
-        category: "דעה",
-        readTime: "4 דקות קריאה",
-        image: "assets/images/opinion.jpg",
-        filename: "2025-05-24-מאמר-דעה.md"
-    },
-    {
-        title: "כתבה שנייה",
-        excerpt: "המשך לסדרת הכתבות החשובות שלנו",
-        author: "כתב שטח",
-        date: "2025-05-24",
-        category: "חדשות",
-        readTime: "3 דקות קריאה",
-        image: "assets/images/news2.jpg",
-        filename: "2025-05-24-כתבה-שנייה.md"
+        category: "טכנולוגיה",
+        readTime: "2 דקות קריאה",
+        image: "assets/images/test2.jpg",
+        filename: "2025-05-24-אני-רוצה-לבדוק-אם-זה-עובד.md"
     },
     {
         title: "בדיקה ראשונה",
@@ -55,14 +45,24 @@ const preloadedArticles = [
         filename: "2025-05-24-בדיקה-ראשונה.md"
     },
     {
-        title: "אני רוצה לבדוק אם זה עובד",
-        excerpt: "בדיקת פונקציונליות המערכת החדשה",
-        author: "מפתח",
+        title: "כתבה שנייה",
+        excerpt: "המשך לסדרת הכתבות החשובות שלנו",
+        author: "כתב שטח",
         date: "2025-05-24",
-        category: "טכנולוגיה",
-        readTime: "2 דקות קריאה",
-        image: "assets/images/test2.jpg",
-        filename: "2025-05-24-אני-רוצה-לבדוק-אם-זה-עובד.md"
+        category: "חדשות",
+        readTime: "3 דקות קריאה",
+        image: "assets/images/news2.jpg",
+        filename: "2025-05-24-כתבה-שנייה.md"
+    },
+    {
+        title: "מאמר דעה חשוב",
+        excerpt: "דעות וחשיבות על נושאים עכשוויים",
+        author: "עורך ראשי",
+        date: "2025-05-24",
+        category: "דעה",
+        readTime: "4 דקות קריאה",
+        image: "assets/images/opinion.jpg",
+        filename: "2025-05-24-מאמר-דעה.md"
     },
     {
         title: "עדכון חשוב",
@@ -233,7 +233,7 @@ function createArticleCard(article, filename, isSmall = false) {
     
     // הוספת אירוע קליק לכל הכרטיס
     card.addEventListener('click', (e) => {
-        window.location.href = `post.html?post=${encodeURIComponent(filename)}`;
+        openArticle(filename);
     });
     
     return card;
@@ -338,7 +338,7 @@ function highlightText(text, searchTerm) {
 }
 
 function openArticle(filename) {
-    window.location.href = `post.html?post=${filename}`;
+    window.location.href = `post.html?post=${encodeURIComponent(filename)}`;
 }
 
 // תפריט נייד
@@ -448,4 +448,4 @@ function showSearchMessage(resultsCount) {
     } else {
         showToast(`נמצאו ${resultsCount} תוצאות`, 'success');
     }
-} 
+}
