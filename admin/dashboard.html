@@ -17,264 +17,285 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             direction: rtl;
+            font-size: 16px;
+            line-height: 1.6;
         }
 
         .admin-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
 
         .admin-header {
             background: white;
-            border-radius: 15px;
-            padding: 30px;
+            border-radius: 20px;
+            padding: 40px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             text-align: center;
         }
 
         .admin-title {
-            color: #333;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            font-weight: 700;
+            color: #2c3e50;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            font-weight: 800;
         }
 
         .admin-subtitle {
-            color: #666;
-            font-size: 1.1rem;
+            color: #7f8c8d;
+            font-size: 1.3rem;
+            font-weight: 400;
         }
 
         .admin-tabs {
             display: flex;
-            gap: 10px;
+            gap: 15px;
             margin-bottom: 30px;
             background: white;
-            border-radius: 15px;
-            padding: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
         .tab-btn {
             flex: 1;
-            padding: 15px 20px;
+            padding: 20px 25px;
             border: none;
             background: transparent;
-            border-radius: 10px;
+            border-radius: 15px;
             font-family: 'Heebo', sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            color: #666;
+            color: #7f8c8d;
         }
 
         .tab-btn.active {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px);
         }
 
         .tab-content {
             display: none;
             background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
         }
 
         .tab-content.active {
             display: block;
         }
 
-        .comments-section {
+        .section-title {
+            font-size: 2rem;
+            color: #2c3e50;
             margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #ecf0f1;
+            font-weight: 700;
         }
 
-        .section-title {
-            font-size: 1.5rem;
-            color: #333;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f0f0f0;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 35px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .comments-section {
+            margin-bottom: 40px;
         }
 
         .comment-card {
             background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-right: 4px solid #667eea;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-right: 5px solid #667eea;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .comment-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .comment-author {
-            font-weight: 600;
-            color: #333;
+            font-weight: 700;
+            color: #2c3e50;
+            font-size: 1.1rem;
         }
 
         .comment-date {
-            color: #666;
-            font-size: 0.9rem;
+            color: #7f8c8d;
+            font-size: 1rem;
         }
 
         .comment-post {
             color: #667eea;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            font-weight: 600;
         }
 
         .comment-content {
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 15px;
+            color: #34495e;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
         }
 
         .comment-actions {
             display: flex;
-            gap: 10px;
+            gap: 15px;
         }
 
         .btn {
-            padding: 8px 16px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 6px;
+            border-radius: 10px;
             font-family: 'Heebo', sans-serif;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .btn-approve {
-            background: #28a745;
+            background: #27ae60;
             color: white;
         }
 
         .btn-approve:hover {
-            background: #218838;
+            background: #229954;
+            transform: translateY(-2px);
         }
 
         .btn-reject {
-            background: #dc3545;
+            background: #e74c3c;
             color: white;
         }
 
         .btn-reject:hover {
-            background: #c82333;
+            background: #c0392b;
+            transform: translateY(-2px);
         }
 
         .btn-delete {
-            background: #6c757d;
+            background: #95a5a6;
             color: white;
         }
 
         .btn-delete:hover {
-            background: #5a6268;
+            background: #7f8c8d;
+            transform: translateY(-2px);
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.1rem;
             margin-bottom: 30px;
         }
 
-        .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-        }
-
-        .empty-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
         }
 
         .posts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
         }
 
         .post-card {
             background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            border-right: 4px solid #667eea;
+            border-radius: 15px;
+            padding: 25px;
+            border-right: 5px solid #667eea;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .post-card:hover {
+            transform: translateY(-3px);
         }
 
         .post-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 10px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            line-height: 1.4;
         }
 
         .post-meta {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1rem;
         }
 
         .post-actions {
             display: flex;
-            gap: 10px;
+            gap: 15px;
         }
 
         .btn-edit {
-            background: #007bff;
+            background: #f39c12;
             color: white;
         }
 
         .btn-edit:hover {
-            background: #0056b3;
+            background: #e67e22;
         }
 
-        @media (max-width: 768px) {
-            .admin-tabs {
-                flex-direction: column;
-            }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #7f8c8d;
+        }
 
-            .comment-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
-            }
-
-            .comment-actions {
-                flex-wrap: wrap;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
         }
 
         .activity-section {
@@ -282,134 +303,208 @@
         }
 
         .activity-section h4 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 700;
         }
 
         .activity-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            space-y: 15px;
         }
 
         .activity-item {
             background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
             border-right: 4px solid #667eea;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .activity-content {
-            flex: 1;
         }
 
         .activity-content strong {
-            display: block;
-            color: #333;
-            margin-bottom: 5px;
+            color: #2c3e50;
+            font-size: 1.1rem;
         }
 
         .activity-meta {
-            color: #666;
-            font-size: 0.9rem;
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            display: block;
+            margin-top: 5px;
         }
 
         .activity-time {
-            color: #999;
-            font-size: 0.8rem;
-            white-space: nowrap;
+            color: #95a5a6;
+            font-size: 0.9rem;
+            margin-top: 10px;
         }
 
         .stats-quick {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
         }
 
         .quick-stat {
             display: flex;
             justify-content: space-between;
-            padding: 10px 15px;
-            background: #f8f9fa;
-            border-radius: 6px;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
         }
 
         .stat-label {
-            color: #666;
+            color: #7f8c8d;
         }
 
         .stat-value {
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        /* טופס הוספת מאמר */
+        .add-post-form {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .add-post-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
             font-weight: 600;
-            color: #333;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: 15px;
+            }
+            
+            .admin-title {
+                font-size: 2rem;
+            }
+            
+            .admin-tabs {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div class="admin-container">
-        <header class="admin-header">
+        <div class="admin-header">
             <h1 class="admin-title">🛠️ מערכת ניהול</h1>
-            <p class="admin-subtitle">נלחמים על החיים - ניהול תוכן ותגובות</p>
-        </header>
+            <p class="admin-subtitle">נלחמים על החיים - לוח הבקרה המתקדם</p>
+        </div>
 
         <div class="admin-tabs">
-            <button class="tab-btn active" onclick="switchTab('dashboard')">📊 לוח בקרה</button>
-            <button class="tab-btn" onclick="switchTab('comments')">💬 ניהול תגובות</button>
-            <button class="tab-btn" onclick="switchTab('posts')">📝 ניהול מאמרים</button>
-            <button class="tab-btn" onclick="switchTab('settings')">⚙️ הגדרות</button>
+            <button class="tab-btn active" onclick="showTab('dashboard')">📊 לוח בקרה</button>
+            <button class="tab-btn" onclick="showTab('comments')">💬 ניהול תגובות</button>
+            <button class="tab-btn" onclick="showTab('posts')">📝 ניהול מאמרים</button>
         </div>
 
         <!-- לוח בקרה -->
         <div id="dashboard" class="tab-content active">
+            <h2 class="section-title">📈 סטטיסטיקות כלליות</h2>
+            
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-number" id="total-posts">0</div>
-                    <div class="stat-label">מאמרים פעילים</div>
+                    <span class="stat-number" id="total-posts">8</span>
+                    <span class="stat-label">סה"כ מאמרים</span>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number" id="pending-comments">0</div>
-                    <div class="stat-label">תגובות ממתינות</div>
+                    <span class="stat-number" id="pending-comments">0</span>
+                    <span class="stat-label">תגובות ממתינות</span>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number" id="approved-comments">0</div>
-                    <div class="stat-label">תגובות מאושרות</div>
+                    <span class="stat-number" id="approved-comments">0</span>
+                    <span class="stat-label">תגובות מאושרות</span>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number" id="total-views">0</div>
-                    <div class="stat-label">צפיות השבוע</div>
+                    <span class="stat-number" id="total-views">0</span>
+                    <span class="stat-label">צפיות השבוע</span>
                 </div>
             </div>
 
-            <div class="section-title">📈 פעילות אחרונה</div>
+            <h3 class="section-title">🔥 פעילות אחרונה</h3>
             <div id="recent-activity">
                 <div class="empty-state">
                     <div class="empty-icon">📊</div>
-                    <p>אין פעילות אחרונה להצגה</p>
+                    <p>טוען נתוני פעילות...</p>
                 </div>
             </div>
         </div>
 
         <!-- ניהול תגובות -->
         <div id="comments" class="tab-content">
+            <h2 class="section-title">💬 ניהול תגובות</h2>
+            
             <div class="comments-section">
-                <div class="section-title">⏳ תגובות ממתינות לאישור</div>
+                <h3 style="font-size: 1.5rem; color: #2c3e50; margin-bottom: 20px;">תגובות ממתינות לאישור</h3>
                 <div id="pending-comments-list">
                     <div class="empty-state">
                         <div class="empty-icon">💬</div>
-                        <p>אין תגובות ממתינות לאישור</p>
+                        <p>אין תגובות ממתינות</p>
                     </div>
                 </div>
             </div>
 
             <div class="comments-section">
-                <div class="section-title">✅ תגובות מאושרות</div>
+                <h3 style="font-size: 1.5rem; color: #2c3e50; margin-bottom: 20px;">תגובות מאושרות</h3>
                 <div id="approved-comments-list">
                     <div class="empty-state">
                         <div class="empty-icon">✅</div>
-                        <p>אין תגובות מאושרות עדיין</p>
+                        <p>אין תגובות מאושרות</p>
                     </div>
                 </div>
             </div>
@@ -417,7 +512,62 @@
 
         <!-- ניהול מאמרים -->
         <div id="posts" class="tab-content">
-            <div class="section-title">📝 מאמרים קיימים</div>
+            <h2 class="section-title">📝 ניהול מאמרים</h2>
+            
+            <button class="btn btn-primary" onclick="toggleAddPostForm()">➕ הוסף מאמר חדש</button>
+            
+            <!-- טופס הוספת מאמר -->
+            <div id="add-post-form" class="add-post-form">
+                <h3 style="margin-bottom: 25px; color: #2c3e50; font-size: 1.5rem;">✍️ מאמר חדש</h3>
+                <form onsubmit="addNewPost(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">כותרת המאמר</label>
+                            <input type="text" class="form-input" name="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">שם הכותב</label>
+                            <input type="text" class="form-input" name="author" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">קטגוריה</label>
+                            <select class="form-select" name="category" required>
+                                <option value="">בחר קטגוריה</option>
+                                <option value="דעה">דעה</option>
+                                <option value="חדשות">חדשות</option>
+                                <option value="עדכונים">עדכונים</option>
+                                <option value="כתבות">כתבות</option>
+                                <option value="קמפיין">קמפיין</option>
+                                <option value="מאמר שבועי">מאמר שבועי</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">תאריך</label>
+                            <input type="date" class="form-input" name="date" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">תקציר</label>
+                        <textarea class="form-textarea" name="excerpt" rows="3" placeholder="תקציר קצר של המאמר..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">תוכן המאמר</label>
+                        <textarea class="form-textarea" name="content" rows="10" placeholder="כתוב כאן את תוכן המאמר..." required></textarea>
+                    </div>
+                    
+                    <div style="display: flex; gap: 15px;">
+                        <button type="submit" class="btn btn-primary">💾 שמור מאמר</button>
+                        <button type="button" class="btn btn-delete" onclick="toggleAddPostForm()">❌ ביטול</button>
+                    </div>
+                </form>
+            </div>
+            
+            <h3 style="font-size: 1.5rem; color: #2c3e50; margin-bottom: 25px;">📚 מאמרים קיימים</h3>
             <div id="posts-list" class="posts-grid">
                 <div class="empty-state">
                     <div class="empty-icon">📝</div>
@@ -425,27 +575,22 @@
                 </div>
             </div>
         </div>
-
-        <!-- הגדרות -->
-        <div id="settings" class="tab-content">
-            <div class="section-title">⚙️ הגדרות מערכת</div>
-            <div class="empty-state">
-                <div class="empty-icon">⚙️</div>
-                <p>הגדרות מערכת יתווספו בקרוב</p>
-            </div>
-        </div>
     </div>
 
     <script>
         // מעבר בין טאבים
-        function switchTab(tabName) {
-            // הסרת active מכל הטאבים
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        function showTab(tabName) {
+            // הסתרת כל הטאבים
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
             
-            // הוספת active לטאב הנוכחי
-            event.target.classList.add('active');
+            // הצגת הטאב הנבחר
             document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
             
             // טעינת נתונים לפי הטאב
             if (tabName === 'comments') {
@@ -458,23 +603,12 @@
         }
 
         // טעינת תגובות
-        async function loadComments() {
-            try {
-                // טעינת תגובות ממתינות מ-localStorage
-                const pendingComments = JSON.parse(localStorage.getItem('pendingComments') || '[]');
-                displayPendingComments(pendingComments);
-                
-                // טעינת תגובות מאושרות מ-localStorage
-                const approvedComments = JSON.parse(localStorage.getItem('approvedComments') || '[]');
-                displayApprovedComments(approvedComments);
-                
-                // עדכון הסטטיסטיקות
-                document.getElementById('pending-comments').textContent = pendingComments.length;
-                document.getElementById('approved-comments').textContent = approvedComments.length;
-                
-            } catch (error) {
-                console.error('שגיאה בטעינת תגובות:', error);
-            }
+        function loadComments() {
+            const pendingComments = JSON.parse(localStorage.getItem('pendingComments') || '[]');
+            const approvedComments = JSON.parse(localStorage.getItem('approvedComments') || '[]');
+            
+            displayPendingComments(pendingComments);
+            displayApprovedComments(approvedComments);
         }
 
         // הצגת תגובות ממתינות
@@ -492,16 +626,17 @@
             }
             
             container.innerHTML = comments.map(comment => `
-                <div class="comment-card" data-id="${comment.id}">
+                <div class="comment-card">
                     <div class="comment-header">
                         <span class="comment-author">${comment.name}</span>
                         <span class="comment-date">${formatDate(comment.date)}</span>
                     </div>
-                    <div class="comment-post">מאמר: ${comment.postTitle || comment.post}</div>
+                    <div class="comment-post">📄 מאמר: ${comment.postTitle}</div>
                     <div class="comment-content">${comment.content}</div>
                     <div class="comment-actions">
                         <button class="btn btn-approve" onclick="approveComment('${comment.id}')">✅ אשר</button>
                         <button class="btn btn-reject" onclick="rejectComment('${comment.id}')">❌ דחה</button>
+                        <button class="btn btn-delete" onclick="deleteComment('${comment.id}', 'pending')">🗑️ מחק</button>
                     </div>
                 </div>
             `).join('');
@@ -515,19 +650,19 @@
                 container.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-icon">✅</div>
-                        <p>אין תגובות מאושרות עדיין</p>
+                        <p>אין תגובות מאושרות</p>
                     </div>
                 `;
                 return;
             }
             
             container.innerHTML = comments.map(comment => `
-                <div class="comment-card" data-id="${comment.id}">
+                <div class="comment-card">
                     <div class="comment-header">
                         <span class="comment-author">${comment.name}</span>
                         <span class="comment-date">${formatDate(comment.date)}</span>
                     </div>
-                    <div class="comment-post">מאמר: ${comment.postTitle || comment.post}</div>
+                    <div class="comment-post">📄 מאמר: ${comment.postTitle}</div>
                     <div class="comment-content">${comment.content}</div>
                     <div class="comment-actions">
                         <button class="btn btn-delete" onclick="deleteComment('${comment.id}', 'approved')">🗑️ מחק</button>
@@ -542,14 +677,12 @@
                 const pendingComments = JSON.parse(localStorage.getItem('pendingComments') || '[]');
                 const approvedComments = JSON.parse(localStorage.getItem('approvedComments') || '[]');
                 
-                // מציאת התגובה
                 const commentIndex = pendingComments.findIndex(c => c.id === commentId);
                 if (commentIndex === -1) {
                     alert('תגובה לא נמצאה');
                     return;
                 }
                 
-                // העברת התגובה לרשימת המאושרות
                 const comment = pendingComments[commentIndex];
                 comment.status = 'approved';
                 comment.approvedDate = new Date().toISOString();
@@ -557,24 +690,25 @@
                 approvedComments.push(comment);
                 pendingComments.splice(commentIndex, 1);
                 
-                // שמירה ב-localStorage
                 localStorage.setItem('pendingComments', JSON.stringify(pendingComments));
                 localStorage.setItem('approvedComments', JSON.stringify(approvedComments));
                 
-                alert('תגובה אושרה בהצלחה!');
-                loadComments(); // רענון הרשימה
+                alert('✅ תגובה אושרה בהצלחה!');
+                loadComments();
+                loadDashboard(); // עדכון סטטיסטיקות
             } catch (error) {
                 console.error('שגיאה באישור תגובה:', error);
-                alert('שגיאה באישור התגובה');
+                alert('❌ שגיאה באישור התגובה');
             }
         }
 
         // דחיית תגובה
         async function rejectComment(commentId) {
+            if (!confirm('האם אתה בטוח שברצונך לדחות תגובה זו?')) return;
+            
             try {
                 const pendingComments = JSON.parse(localStorage.getItem('pendingComments') || '[]');
                 
-                // מציאת התגובה ומחיקתה
                 const commentIndex = pendingComments.findIndex(c => c.id === commentId);
                 if (commentIndex === -1) {
                     alert('תגובה לא נמצאה');
@@ -584,36 +718,105 @@
                 pendingComments.splice(commentIndex, 1);
                 localStorage.setItem('pendingComments', JSON.stringify(pendingComments));
                 
-                alert('תגובה נדחתה ונמחקה!');
-                loadComments(); // רענון הרשימה
+                alert('❌ תגובה נדחתה ונמחקה!');
+                loadComments();
+                loadDashboard();
             } catch (error) {
                 console.error('שגיאה בדחיית תגובה:', error);
-                alert('שגיאה בדחיית התגובה');
+                alert('❌ שגיאה בדחיית התגובה');
             }
         }
 
         // מחיקת תגובה
         async function deleteComment(commentId, type) {
-            if (confirm('האם אתה בטוח שברצונך למחוק תגובה זו?')) {
-                try {
-                    const storageKey = type === 'approved' ? 'approvedComments' : 'pendingComments';
-                    const comments = JSON.parse(localStorage.getItem(storageKey) || '[]');
-                    
-                    const commentIndex = comments.findIndex(c => c.id === commentId);
-                    if (commentIndex === -1) {
-                        alert('תגובה לא נמצאה');
-                        return;
-                    }
-                    
-                    comments.splice(commentIndex, 1);
-                    localStorage.setItem(storageKey, JSON.stringify(comments));
-                    
-                    alert('תגובה נמחקה בהצלחה!');
-                    loadComments(); // רענון הרשימה
-                } catch (error) {
-                    console.error('שגיאה במחיקת תגובה:', error);
-                    alert('שגיאה במחיקת התגובה');
+            if (!confirm('האם אתה בטוח שברצונך למחוק תגובה זו לצמיתות?')) return;
+            
+            try {
+                const storageKey = type === 'approved' ? 'approvedComments' : 'pendingComments';
+                const comments = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                
+                const commentIndex = comments.findIndex(c => c.id === commentId);
+                if (commentIndex === -1) {
+                    alert('תגובה לא נמצאה');
+                    return;
                 }
+                
+                comments.splice(commentIndex, 1);
+                localStorage.setItem(storageKey, JSON.stringify(comments));
+                
+                alert('🗑️ תגובה נמחקה בהצלחה!');
+                loadComments();
+                loadDashboard();
+            } catch (error) {
+                console.error('שגיאה במחיקת תגובה:', error);
+                alert('❌ שגיאה במחיקת התגובה');
+            }
+        }
+
+        // הצגה/הסתרה של טופס הוספת מאמר
+        function toggleAddPostForm() {
+            const form = document.getElementById('add-post-form');
+            form.classList.toggle('active');
+            
+            if (form.classList.contains('active')) {
+                // מילוי תאריך נוכחי
+                const today = new Date().toISOString().split('T')[0];
+                form.querySelector('input[name="date"]').value = today;
+            }
+        }
+
+        // הוספת מאמר חדש
+        async function addNewPost(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const postData = {
+                title: formData.get('title'),
+                author: formData.get('author'),
+                category: formData.get('category'),
+                date: formData.get('date'),
+                excerpt: formData.get('excerpt'),
+                content: formData.get('content')
+            };
+            
+            // יצירת שם קובץ
+            const filename = `${postData.date}-${postData.title.replace(/\s+/g, '-').replace(/[^\w\-]/g, '')}.md`;
+            
+            // יצירת תוכן Markdown
+            const markdownContent = `---
+title: ${postData.title}
+subtitle: ""
+date: ${new Date(postData.date).toISOString()}
+author: ${postData.author}
+category: ${postData.category}
+excerpt: "${postData.excerpt}"
+published: true
+urgent: false
+featured: false
+---
+
+${postData.content}`;
+
+            try {
+                // שמירה ב-localStorage (בפרויקט אמיתי נשלח לשרת)
+                const posts = JSON.parse(localStorage.getItem('adminPosts') || '[]');
+                posts.push({
+                    filename,
+                    ...postData,
+                    content: markdownContent,
+                    createdAt: new Date().toISOString()
+                });
+                localStorage.setItem('adminPosts', JSON.stringify(posts));
+                
+                alert('✅ מאמר נוסף בהצלחה!');
+                event.target.reset();
+                toggleAddPostForm();
+                loadPosts();
+                loadDashboard();
+                
+            } catch (error) {
+                console.error('שגיאה בהוספת מאמר:', error);
+                alert('❌ שגיאה בהוספת המאמר');
             }
         }
 
@@ -621,57 +824,137 @@
         async function loadPosts() {
             const container = document.getElementById('posts-list');
             
-            // סימולציה של מאמרים (בפרויקט אמיתי נטען מהשרת)
-            const posts = [
+            // מאמרים קיימים + מאמרים שנוספו דרך הממשק
+            const adminPosts = JSON.parse(localStorage.getItem('adminPosts') || '[]');
+            const existingPosts = [
                 {
                     title: "הברכיים שלא כרעו לבעל והחיילים שלא נכנעים לחמאס",
                     author: "אלעזר ריגר",
                     date: "2025-05-24",
+                    category: "דעה",
                     filename: "2025-05-24-gideon-warriors.md"
                 },
                 {
                     title: "בדיקה ראשונה",
                     author: "צוות הפיתוח",
                     date: "2025-05-24",
+                    category: "בדיקה",
                     filename: "2025-05-24-בדיקה-ראשונה.md"
+                },
+                {
+                    title: "בדיקה",
+                    author: "צוות הפיתוח",
+                    date: "2025-05-24",
+                    category: "בדיקה",
+                    filename: "2025-05-24-בדיקה.md"
+                },
+                {
+                    title: "עדכון",
+                    author: "צוות הפיתוח",
+                    date: "2025-05-24",
+                    category: "עדכונים",
+                    filename: "2025-05-24-עדכון.md"
+                },
+                {
+                    title: "מאמר דעה",
+                    author: "צוות הפיתוח",
+                    date: "2025-05-24",
+                    category: "דעה",
+                    filename: "2025-05-24-מאמר-דעה.md"
+                },
+                {
+                    title: "כתבה שנייה",
+                    author: "צוות הפיתוח",
+                    date: "2025-05-24",
+                    category: "כתבות",
+                    filename: "2025-05-24-כתבה-שנייה.md"
+                },
+                {
+                    title: "אני רוצה לבדוק אם זה עובד",
+                    author: "צוות הפיתוח",
+                    date: "2025-05-24",
+                    category: "בדיקה",
+                    filename: "2025-05-24-אני-רוצה-לבדוק-אם-זה-עובד.md"
+                },
+                {
+                    title: "הברכיים שלא כרעו לבעל והחיילים שלא נכנעים לחמאס",
+                    author: "אלעזר ריגר",
+                    date: "2025-05-24",
+                    category: "דעה",
+                    filename: "2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md"
                 }
             ];
             
-            container.innerHTML = posts.map(post => `
+            const allPosts = [...existingPosts, ...adminPosts];
+            
+            if (allPosts.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📝</div>
+                        <p>אין מאמרים</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = allPosts.map((post, index) => `
                 <div class="post-card">
                     <div class="post-title">${post.title}</div>
                     <div class="post-meta">
-                        <strong>כותב:</strong> ${post.author}<br>
-                        <strong>תאריך:</strong> ${formatDate(post.date)}<br>
-                        <strong>קובץ:</strong> ${post.filename}
+                        <strong>✍️ כותב:</strong> ${post.author}<br>
+                        <strong>📅 תאריך:</strong> ${formatDate(post.date)}<br>
+                        <strong>🏷️ קטגוריה:</strong> ${post.category}<br>
+                        <strong>📄 קובץ:</strong> ${post.filename}
                     </div>
                     <div class="post-actions">
-                        <button class="btn btn-edit" onclick="editPost('${post.filename}')">✏️ ערוך</button>
-                        <button class="btn btn-delete" onclick="deletePost('${post.filename}')">🗑️ מחק</button>
+                        <button class="btn btn-edit" onclick="editPost('${post.filename}', ${index})">✏️ ערוך</button>
+                        <button class="btn btn-delete" onclick="deletePost('${post.filename}', ${index}, ${index >= existingPosts.length})">🗑️ מחק</button>
                     </div>
                 </div>
             `).join('');
         }
 
         // עריכת מאמר
-        function editPost(filename) {
-            alert(`עריכת מאמר: ${filename}\n(פונקציונליות תתווסף בקרוב)`);
+        function editPost(filename, index) {
+            alert(`✏️ עריכת מאמר: ${filename}\n\n📝 פונקציונליות עריכה מתקדמת תתווסף בקרוב!\n\nכרגע ניתן למחוק ולהוסיף מאמרים חדשים.`);
         }
 
         // מחיקת מאמר
-        function deletePost(filename) {
-            if (confirm(`האם אתה בטוח שברצונך למחוק את המאמר: ${filename}?`)) {
-                alert('מאמר נמחק! (פונקציונליות תתווסף בקרוב)');
+        function deletePost(filename, index, isAdminPost) {
+            if (!confirm(`🗑️ האם אתה בטוח שברצונך למחוק את המאמר:\n"${filename}"?\n\nפעולה זו לא ניתנת לביטול!`)) return;
+            
+            try {
+                if (isAdminPost) {
+                    // מחיקת מאמר שנוסף דרך הממשק
+                    const adminPosts = JSON.parse(localStorage.getItem('adminPosts') || '[]');
+                    const existingPostsCount = 8; // מספר המאמרים הקיימים
+                    const adminIndex = index - existingPostsCount;
+                    
+                    if (adminIndex >= 0 && adminIndex < adminPosts.length) {
+                        adminPosts.splice(adminIndex, 1);
+                        localStorage.setItem('adminPosts', JSON.stringify(adminPosts));
+                        alert('✅ מאמר נמחק בהצלחה!');
+                        loadPosts();
+                        loadDashboard();
+                    }
+                } else {
+                    // מאמר קיים - לא ניתן למחיקה אמיתית
+                    alert('⚠️ לא ניתן למחוק מאמרים קיימים במערכת.\nניתן למחוק רק מאמרים שנוספו דרך ממשק הניהול.');
+                }
+            } catch (error) {
+                console.error('שגיאה במחיקת מאמר:', error);
+                alert('❌ שגיאה במחיקת המאמר');
             }
         }
 
         // טעינת לוח הבקרה
         function loadDashboard() {
-            // טעינת נתונים אמיתיים מהאנליטיקס
             const analyticsData = getAnalyticsDataFromStorage();
+            const adminPosts = JSON.parse(localStorage.getItem('adminPosts') || '[]');
+            const totalPosts = 8 + adminPosts.length; // מאמרים קיימים + חדשים
             
             // עדכון סטטיסטיקות
-            document.getElementById('total-posts').textContent = '8';
+            document.getElementById('total-posts').textContent = totalPosts;
             document.getElementById('pending-comments').textContent = JSON.parse(localStorage.getItem('pendingComments') || '[]').length;
             document.getElementById('approved-comments').textContent = JSON.parse(localStorage.getItem('approvedComments') || '[]').length;
             document.getElementById('total-views').textContent = analyticsData.weeklyViews.toLocaleString();
@@ -748,7 +1031,8 @@
                 activityContainer.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-icon">📊</div>
-                        <p>אין פעילות אחרונה להצגה</p>
+                        <p>אין נתוני פעילות להצגה</p>
+                        <p style="font-size: 0.9rem; margin-top: 10px;">בקר באתר כדי ליצור נתוני אנליטיקס</p>
                     </div>
                 `;
                 return;
@@ -762,9 +1046,9 @@
                             <div class="activity-item">
                                 <div class="activity-content">
                                     <strong>${getArticleTitle(article.article)}</strong>
-                                    <span class="activity-meta">${article.weekViews} צפיות השבוע | ${article.totalViews} צפיות סה"כ</span>
+                                    <span class="activity-meta">👀 ${article.weekViews} צפיות השבוע | 📊 ${article.totalViews} צפיות סה"כ</span>
                                 </div>
-                                <div class="activity-time">${formatFileName(article.article)}</div>
+                                <div class="activity-time">📄 ${formatFileName(article.article)}</div>
                             </div>
                         `).join('')}
                     </div>
@@ -774,12 +1058,16 @@
                     <h4>📊 סטטיסטיקות מהירות</h4>
                     <div class="stats-quick">
                         <div class="quick-stat">
-                            <span class="stat-label">סה"כ מאמרים עם צפיות:</span>
+                            <span class="stat-label">📰 מאמרים עם צפיות:</span>
                             <span class="stat-value">${Object.keys(analyticsData.articleViews).length}</span>
                         </div>
                         <div class="quick-stat">
-                            <span class="stat-label">סה"כ סשנים:</span>
+                            <span class="stat-label">👥 סה"כ סשנים:</span>
                             <span class="stat-value">${analyticsData.totalSessions}</span>
+                        </div>
+                        <div class="quick-stat">
+                            <span class="stat-label">📈 ממוצע צפיות ליום:</span>
+                            <span class="stat-value">${Math.round(analyticsData.weeklyViews / 7)}</span>
                         </div>
                     </div>
                 </div>
@@ -794,7 +1082,11 @@
                 '2025-05-24-gideon-warriors.md': 'הברכיים שלא כרעו לבעל',
                 '2025-05-24-בדיקה-ראשונה.md': 'בדיקה ראשונה',
                 '2025-05-24-בדיקה.md': 'בדיקה',
-                '2025-05-24-אני-רוצה-לבדוק-אם-זה-עובד.md': 'אני רוצה לבדוק אם זה עובד'
+                '2025-05-24-עדכון.md': 'עדכון',
+                '2025-05-24-מאמר-דעה.md': 'מאמר דעה',
+                '2025-05-24-כתבה-שנייה.md': 'כתבה שנייה',
+                '2025-05-24-אני-רוצה-לבדוק-אם-זה-עובד.md': 'אני רוצה לבדוק אם זה עובד',
+                '2025-05-24-הברכיים-שלא-כרעו-לבעל-והחיילים-שלא-נכנעים-לחמאס.md': 'הברכיים שלא כרעו לבעל והחיילים שלא נכנעים לחמאס'
             };
             return titles[filename] || filename.replace('.md', '').replace(/^\d{4}-\d{2}-\d{2}-/, '');
         }
